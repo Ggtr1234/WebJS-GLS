@@ -23,8 +23,11 @@
 
         <tr>
             <td> <%= item.id %> </td>
-            <td> <%= item.nom %></td>
-            <td> <%= item.rol %></td>
+            <td> <%= item.idequipo %></td>
+            <td> <%= item.equiponombre %></td>
+            <td> <%= item.nacionequipo %></td>
+            <td> <%= item.nombrepiloto %></td>
+            <td> <%= item.nacionespilotos %></td>
             <td>
                 <a href="#" data-item-id="<%= item.id%>" class="action_delete">Delete</a>
                 <a href="/items/update/<%= item.id%>" >Update</a>

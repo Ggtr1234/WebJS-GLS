@@ -18,9 +18,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 let items = [
-    {id:1, nom:'nombre' , rol:'rol1'},
-    {id:2, nom:'nombre2', rol:'rol2'},
-    {id:3, nom:'nombre3', rol:'rol3'},
+    {id: 1, idequipo: "mercedes", equiponombre: "Mercedes-AMG Petronas Formula One Team", nacionequipo: "Alemanes", nombrepiloto: ["Lewis Hamilton", "Valtteri Bottas"], nacionespilotos: "GBR FIN"},
+    {id: 2, idequipo: "redbull", equiponombre: "Red Bull Racing", nacionequipo: "Austriacos", nombrepiloto: ["Max Verstappen", "Sergio Pérez Mendoza"], nacionespilotos: "NLD MX"},
+    {id: 3, idequipo: "ferrari", equiponombre: "Scuderia Ferrari", nacionequipo: "Italianos", nombrepiloto: ["Charles Leclerc", "Carlos Sainz Vázquez"], nacionespilotos: "MC ESP"},
+    {id: 4, idequipo: "mclaren", equiponombre: "McLarenF1 Team", nacionequipo: "Britanicos", nombrepiloto: ["Lando Norris", "Daniel Ricciardo"], nacionespilotos: "GBr AUS"},
+    {id: 5, idequipo: "astonmartin", equiponombre: "Aston Martin Cognizant Formula One Team", nacionequipo: "Britanicos", nombrepiloto: ["Sebastian Vettel", "Lance Stroll"], nacionespilotos: "DEU CAN"},
 ]
 
 
