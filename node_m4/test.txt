@@ -1,0 +1,45 @@
+//READ ALL EQUIPOS BIEN
+
+    curl -X GET http://localhost:3000/api/equipos
+
+//READ UN ITEM DE EQUIPO POR ID BIEN
+
+    curl -X GET http://localhost:3000/api/equipos/1
+
+//DELETE EQUIPOS BIEN
+
+    curl -X DELETE http://localhost:3000/api/equipos/1
+
+//INSERT EQUIPO BIEN
+
+curl -X POST http://localhost:3000/api/equipos -H "Content-Type: application/json" -d '{"id": 6, "idequipo":"insert", "equiponombre":"insert", "nacionequipo":"insert", "nombrepiloto":"insert", "nacionespilotos":"insert"}'
+
+//UPDATE EQUIPOS BIEN
+
+curl -X POST http://localhost:3000/api/equipos/update -H "Content-Type: application/json" -d '{"id": 1, "idequipo":"update", "equiponombre":"update", "nacionequipo":"update", "nombrepiloto":"update", "nacionespilotos":"update"}'
+
+/////////\\\\\\\\\
+
+
+
+
+//READ ALL PILOTOS BIEN
+
+    curl -X GET http://localhost:3000/api/pilotos
+
+//READ UN ITEM DE PILOTOS POR ID BIEN
+
+    curl -X GET http://localhost:3000/api/pilotos/1
+
+//DELETE PILOTOS BIEN
+
+    curl -X DELETE http://localhost:3000/api/pilotos/1
+
+//INSERT PILOTOS BIEN
+
+curl -X POST http://localhost:3000/api/pilotos -H "Content-Type: application/json" -d '{"id": 6, "idequipo":"insert", "nombrepiloto":"insert", "apellidospiloto":"insert", "nacionpiloto":"insert", "titulospiloto":"insert", "imagenpiloto": "insert"}'
+
+//UPDATE PILOTOS BIEN
+
+curl -X POST http://localhost:3000/api/pilotos/update -H "Content-Type: application/json" -d '{"id": 1, "idequipo":"update", "nombrepiloto":"update", "apellidospiloto":"update", "nacionpiloto":"update", "titulospiloto":"update", "imagenpiloto": "update"}'
+

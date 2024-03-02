@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1> Lista de Pilotos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>ID equipo</th>
+        <th>Nombre piloto</th>
+        <th>apellidospiloto</th>
+        <th>nacionpiloto</th>
+        <th>titulospiloto</th>
+        <th>imagenpiloto</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% pilotos.forEach( function (piloto){ %>
+
+        <tr>
+            <td> <%= piloto.id %> </td>
+            <td> <%= piloto.idequipo %></td>
+            <td> <%= piloto.nombrepiloto %></td>
+            <td> <%= piloto.apellidospiloto %></td>
+            <td> <%= piloto.nacionpiloto %></td>
+            <td> <%= piloto.titulospiloto %></td>
+            <td> <%= piloto.imagenpiloto %></td>
+            <td>
+                <a href="#" data-piloto-id="<%= piloto.id%>" class="action_delete_piloto">Delete</a>
+                <a href="/pilotos/update/<%= piloto.id%>" >Update</a>
+            </td>
+
+        </tr>
+    <% } ) %>
+
+    </tbody>
+</table>
+
+<script>
+    async function delete_piloto(evt){
+        evt.preventDefault() // no sigas tu comportamiento por defecto
+        let id = $(this).data('piloto-id')
+        try {
+            await $.ajax({
+                url: '/api/pilotos/'  + id,
+                type: 'DELETE'
+            })
+            window.location.reload()
+
+        }catch (e) {
+            console.log(e)
+            console.log('Error' + e.status + " " + e.statusText)
+        }
+    }
+
+    $(document).ready(() =>{
+        document.getElementsByClassName('action_delete_piloto')
+        $('.action_delete_piloto').click(delete_piloto)
+    });
+</script>
+
+</body>
+</html>

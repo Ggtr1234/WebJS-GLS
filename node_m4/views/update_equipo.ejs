@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+</head>
+<body>
+<h1> UPDATE ITEM</h1>
+<form action="/equipos/update" method="POST">
+
+    <input id="id" type="hidden" name="id" value="<%= item.id%>">
+    <input id="idequipo" type="hidden" name="idequipo" value="<%= item.idequipo%>">
+
+    <label for="equiponombre">Nombre Equipo</label>
+    <input id="equiponombre" type="text" name="equiponombre" value="<%= item.equiponombre%>" >
+
+    <label for="nacionequipo">Nacion equipo</label>
+    <input id="nacionequipo" type="text" name="nacionequipo" value="<%= item.nacionequipo%>" >
+
+    <label for="nombrepiloto">Nombre pilotos</label>
+    <input id="nombrepiloto" type="text" name="nombrepiloto" value="<%= item.nombrepiloto%>" >
+
+    <label for="nacionespilotos">Naciones pilotos</label>
+    <input id="nacionespilotos" type="text" name="nacionespilotos" value="<%= item.nacionespilotos%>" >
+
+
+    <input type="submit" value="update">
+</form>
+</body>
+</html>
