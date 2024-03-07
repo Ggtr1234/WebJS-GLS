@@ -38,6 +38,11 @@ let pilotos = [
     {id: 10, idequipo: "astonmartin", nombrepiloto: "Lance", apellidospiloto: "Stroll", nacionpiloto: "Canada", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"}
 ]
 
+const db = require('knex')({
+    client:'sqlite3',
+    connection: '../f1.sqlite'
+});
+
 function findItem(where, id){
     for (let i = 0; i < where.length ; i++) {
         if (where[i].id == id){
@@ -173,13 +178,18 @@ app.get('/', (req, res) => {
 });
 
 // Show ALL Items
+// app.get('/pilotos', (req, res) => {
+//     res.render('pilotos',
+//         {
+//             title:'PILOTOS',
+//             pilotos:pilotos    }
+//     )
+// })
+
 app.get('/pilotos', (req, res) => {
-    res.render('pilotos',
-        {
-            title:'PILOTOS',
-            pilotos:pilotos    }
-    )
+    res.render('insert_piloto.ejs')
 })
+
 // Update quipo
 app.post("/pilotos/update", (req, res)=>{
     //  Indicamos los valores que necesitamos
@@ -205,10 +215,22 @@ app.get('/pilotos/insert', (req,res)=>{
     )
 });
 // INSERT ITEM POST: get params and do your mojo!
-app.post('/pilotos',(req, res)=>{
+// app.post('/pilotos',(req, res)=>{
+//     const params = req.body
+//     params.id = pilotos.length +1
+//     pilotos.push(params)
+//     res.redirect('/pilotos')
+// });
+
+app.post('/pilotos',async (req, res)=>{
     const params = req.body
-    params.id = pilotos.length +1
-    pilotos.push(params)
+    try {
+        const result = await db('pilotos').insert(params)
+        console.log('insertado!')
+    }catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
+    }
     res.redirect('/pilotos')
 });
 // UPDATE ITEM
