@@ -40,7 +40,7 @@ let pilotos = [
 
 const db = require('knex')({
     client:'sqlite3',
-    connection: '../f1.sqlite'
+    connection: './f1.sqlite'
 });
 
 function findItem(where, id){
@@ -224,9 +224,10 @@ app.get('/pilotos/insert', (req,res)=>{
 
 app.post('/pilotos',async (req, res)=>{
     const params = req.body
+    console.log('params',params)
     try {
-        const result = await db('pilotos').insert(params)
-        console.log('insertado!')
+        const result = await db('pilotos')
+        console.log('insertado!', result)
     }catch (e) {
         console.log(e)
         res.status(500).send('error en el servidor')
