@@ -226,13 +226,13 @@ app.post('/pilotos',async (req, res)=>{
     const params = req.body
     console.log('params',params)
     try {
-        const result = await db('pilotos')
+        const result = await db('pilotos').insert(params)
         console.log('insertado!', result)
+        res.redirect('/pilotos')
     }catch (e) {
         console.log(e)
         res.status(500).send('error en el servidor')
     }
-    res.redirect('/pilotos')
 });
 // UPDATE ITEM
 app.get('/pilotos/update/:id', (req,res)=>{
