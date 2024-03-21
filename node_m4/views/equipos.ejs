@@ -13,32 +13,30 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>ID equipo</th>
         <th>Nombre</th>
-        <th>Nacion Equipo</th>
-        <th>Nombres Pilotos</th>
-        <th>Naciones Pilotos</th>
-        <th>Acciones</th>
+        <th>Nación</th>
+        <th>Campeonatos</th>
+        <th>Historia</th>
+        <th>Imagen</th>
     </tr>
     </thead>
     <tbody>
-    <% equipos.forEach( function (equipo){ %>
-
+    <% if (Array.isArray(equipos)) { %>
+        <% equipos.forEach(function(equipo) { %>
+            <tr>
+                <td><%= equipo.id %></td>
+                <td><%= equipo.nombre %></td>
+                <td><%= equipo.nacion %></td>
+                <td><%= equipo.campeonatos %></td>
+                <td><%= equipo.historia %></td>
+                <td><img src="<%= equipo.imagen %>" alt="<%= equipo.nombre %>" height="150px"></td>
+            </tr>
+        <% }); %>
+    <% } else { %>
         <tr>
-            <td> <%= equipo.id %> </td>
-            <td> <%= equipo.idequipo %></td>
-            <td> <%= equipo.equiponombre %></td>
-            <td> <%= equipo.nacionequipo %></td>
-            <td> <%= equipo.nombrepiloto %></td>
-            <td> <%= equipo.nacionespilotos %></td>
-            <td>
-                <a href="#" data-equipo-id="<%= equipo.id%>" class="action_delete_equipo">Delete</a>
-                <a href="/equipos/update/<%= equipo.id%>" >Update</a>
-            </td>
-
+            <td colspan="6">No se encontraron equipos</td>
         </tr>
-    <% } ) %>
-
+    <% } %>
     </tbody>
 </table>
 

@@ -37,7 +37,8 @@ curl -X POST http://localhost:3000/api/equipos/update -H "Content-Type: applicat
 
 //INSERT PILOTOS BIEN
 
-curl -X POST http://localhost:3000/api/pilotos -H "Content-Type: application/json" -d '{"id": 6, "idequipo":"insert", "nombrepiloto":"insert", "apellidospiloto":"insert", "nacionpiloto":"insert", "titulospiloto":"insert", "imagenpiloto": "insert"}'
+curl -X POST http://localhost:3000/api/pilotos -H "Content-Type: application/json"
+-d '{"id": 6, "idequipo":"insert", "nombrepiloto":"insert", "apellidospiloto":"insert", "nacionpiloto":"insert", "titulospiloto":"insert", "imagenpiloto": "insert"}'
 
 //UPDATE PILOTOS BIEN
 

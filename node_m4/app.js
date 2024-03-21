@@ -3,8 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-
+var swaggerJSDoc = require('swagger-jsdoc');
+var  swaggerUi = require('swagger-ui-express');
 var app = express();
 
 // view engine setup
@@ -16,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+module.exports = app;
 
 let equipos = [
     {id: 1, idequipo: "mercedes", equiponombre: "Mercedes-AMG Petronas Formula One Team", nacionequipo: "Alemanes", nombrepiloto: ["Lewis Hamilton", "Valtteri Bottas"], nacionespilotos: "GBR FIN"},
@@ -38,6 +40,26 @@ let pilotos = [
     {id: 10, idequipo: "astonmartin", nombrepiloto: "Lance", apellidospiloto: "Stroll", nacionpiloto: "Canada", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"}
 ]
 
+const swaggerOptions ={
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'API WEB GLS',
+            version: '1.0.0',
+            description: 'Equipos y pilotos de Formula 1',
+            contact: {
+                name: "German Llerena Sanchez",
+                email: 'llerenagerman4@gmail.com',
+            },
+            servers: ["http://localhost:3000"]
+        }
+    },
+    apis: ['app.js']
+};
+// Swagger
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+//
 const db = require('knex')({
     client:'sqlite3',
     connection: './f1.sqlite'
@@ -55,10 +77,23 @@ function findItem(where, id){
 //////////////////////////////////////////////// API //////////////////////////////////////////////
 
                   //////////////////////////// EQUIPOS ///////////////////////////////
-
+/**
+ * @swagger
+ * tags:
+ *     name: Pilotos
+ *     description: API para manejar pilotos
+ */
 // MUESTRA TODOS LOS EQUIPOS
-app.get('/api/equipos', (req, res) => {
-    res.status(200).send(equipos)
+app.get('/api/equipos', function (req, res) {
+    db.select('*')
+        .from('equipos')
+        .then(function (data){
+            data = {equipos: data}
+            res.send(data)
+        })
+        .catch(function (error){
+            console.log(error)
+        })
 });
 
 // ITEMS DETAIL
@@ -173,6 +208,17 @@ app.post('/api/pilotos',(req, res)=>{
             //////////////////////////// PILOTOS ///////////////////////////////
 
 // INDEX
+/**
+ * @swagger
+ *
+ * /:
+ *  get:
+ *      summary: Es para mostrar el index principal de la pagina
+ *      description: Es para mostrar el index principal de la pagina
+ *      responses:
+ *          200:
+ *              description: Para probar el metodo GET
+ */
 app.get('/', (req, res) => {
     res.render('index',{title:'WEB DE F1'})
 });
@@ -222,7 +268,7 @@ app.get('/pilotos/insert', (req,res)=>{
 //     res.redirect('/pilotos')
 // });
 
-app.post('/pilotos',async (req, res)=>{
+app.post('/pilotos2',async (req, res)=>{
     const params = req.body
     console.log('params',params)
     try {
@@ -251,13 +297,21 @@ app.get('/pilotos/update/:id', (req,res)=>{
 });
         //////////////////////////// EQUIPOS ///////////////////////////////
 // Show ALL Items
-app.get('/equipos', (req, res) => {
-    res.render('equipos',
-        {
-            title:'EQUIPOS',
-            equipos:equipos    }
-    )
-})
+app.get('/equipos', function (req, res) {
+    db.select('*')
+        .from('equipos')
+        .then(function (data){
+            data = {equipos: data}
+            console.log(data)
+            res.render('equipos',{
+                title: 'Equipos',
+                equipos:data.equipos
+            })
+        })
+        .catch(function (error){
+          console.log(error)
+        });
+});
 // Update quipo
 app.post("/equipos/update", (req, res)=>{
     //  Indicamos los valores que necesitamos
@@ -322,4 +376,3 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-module.exports = app;
