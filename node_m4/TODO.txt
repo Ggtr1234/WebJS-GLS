@@ -1,12 +1,16 @@
-Organizar codigo para empezar a picar con claridad (borrar comentarios y lineas comentadas absurdas)
+--Organizar codigo para empezar a picar con claridad (borrar comentarios y lineas comentadas absurdas) HECHO
 
-Refactorizar todos los endPoints para trabajar sobre la base de datos sqlite
+--Refactorizar todos los endPointsAPI para trabajar sobre la base de datos sqlite HECHO
 
-Agregar documentacion de la api a cada endpoint
+Refactorizar todos los endPointsWEB para trabajar sobre la base de datos sqlite
 
-Volver a repasar que todo el codigo este limpio y se entendible
+--Agregar documentacion de la api a cada endpoint HECHO
+
+--Volver a repasar que todo el codigoAPI este limpio y se entendible HECHO
+
+Volver a repasar que todo el codigoWEB este limpio y se entendible
 
 Ponerse con la parte front de la pagina
     - PARTIALS!!
 
-21/03/2024 - Hecho renderizado de datos recibidos por la base de datos /equipos, falta en pilotos.
+COMPROBACION FINAL DE QUE TODO ESTA BIEN Y EN SU SITIO

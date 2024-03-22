@@ -15,27 +15,27 @@
         <th>ID</th>
         <th>ID equipo</th>
         <th>Nombre piloto</th>
-        <th>apellidospiloto</th>
-        <th>nacionpiloto</th>
-        <th>titulospiloto</th>
-        <th>imagenpiloto</th>
+        <th>Edad</th>
+        <th>Nacion</th>
+        <th>Titulos</th>
+        <th>Imagen</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <% pilotos.forEach( function (piloto){ %>
+    <% pilotos.forEach( function (pilotos){ %>
 
         <tr>
-            <td> <%= piloto.id %> </td>
-            <td> <%= piloto.idequipo %></td>
-            <td> <%= piloto.nombrepiloto %></td>
-            <td> <%= piloto.apellidospiloto %></td>
-            <td> <%= piloto.nacionpiloto %></td>
-            <td> <%= piloto.titulospiloto %></td>
-            <td> <%= piloto.imagenpiloto %></td>
+            <td> <%= pilotos.id %> </td>
+            <td> <%= pilotos.nombreEquipo %></td>
+            <td> <%= pilotos.nombre %></td>
+            <td> <%= pilotos.edad %></td>
+            <td> <%= pilotos.nacion %></td>
+            <td> <%= pilotos.premios %></td>
+            <td><img src="<%= pilotos.imagen %>" alt="" height="150px"></td>
             <td>
-                <a href="#" data-piloto-id="<%= piloto.id%>" class="action_delete_piloto">Delete</a>
-                <a href="/pilotos/update/<%= piloto.id%>" >Update</a>
+                <a href="#" data-piloto-id="<%= pilotos.id%>" class="action_delete_piloto">Delete</a>
+                <a href="/pilotos/update/<%= pilotos.id%>" >Update</a>
             </td>
 
         </tr>

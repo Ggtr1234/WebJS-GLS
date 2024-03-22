@@ -4,27 +4,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
 </head>
 <body>
-<h1> UPDATE PILOTO</h1>
+<h1> <%= title %></h1>
 <form action="/pilotos/update" method="POST">
 
-    <input id="id" type="hidden" name="id" value="<%= piloto.id %>">
-    <label for="idequipo">ID EQUIPO</label>
-    <input id="idequipo" type="text" name="idequipo" value="<%= piloto.idequipo %>">
+    <input id="id" type="hidden" name="id" value="<%= pilotos.id %>">
+    <label for="idEquipo">ID EQUIPO</label>
+    <input id="idEquipo" type="text" name="idEquipo" value="<%= pilotos.idEquipo %>">
 
-    <label for="nombrepiloto">nombrepiloto</label>
-    <input id="nombrepiloto" type="text" name="nombrepiloto" value=" <%= piloto.nombrepiloto %>" >
+    <label for="nombre">Nombre</label>
+    <input id="nombre" type="text" name="nombre" value=" <%= pilotos.nombre %>" >
 
-    <label for="apellidospiloto">apellidospiloto</label>
-    <input id="apellidospiloto" type="text" name="apellidospiloto" value="<%= piloto.apellidospiloto %>" >
+    <label for="edad">Edad</label>
+    <input id="edad" type="text" name="edad" value="<%= pilotos.edad %>" >
 
-    <label for="nacionpiloto">nacionpiloto</label>
-    <input id="nacionpiloto" type="text" name="nacionpiloto" value="<%= piloto.nacionpiloto %>" >
+    <label for="nacion">Nacion</label>
+    <input id="nacion" type="text" name="nacion" value="<%= pilotos.nacion %>" >
 
-    <label for="titulospiloto">titulospiloto</label>
-    <input id="titulospiloto" type="text" name="titulospiloto" value="<%= piloto.titulospiloto %>" >
+    <label for="premios">Premios</label>
+    <input id="premios" type="text" name="premios" value="<%= pilotos.premios %>" >
 
-    <label for="imagenpiloto">IMAGEN</label>
-    <input id="imagenpiloto" type="text" name="imagenpiloto" value="<%= piloto.imagenpiloto %>" >
+    <label for="imagen">IMAGEN</label>
+    <input id="imagen" type="text" name="imagen" value="<%= pilotos.imagen %>" >
 
 
     <input type="submit" value="update">
