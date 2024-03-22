@@ -19,26 +19,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
 
-let equipos = [
-    {id: 1, idequipo: "mercedes", equiponombre: "Mercedes-AMG Petronas Formula One Team", nacionequipo: "Alemanes", nombrepiloto: ["Lewis Hamilton", "Valtteri Bottas"], nacionespilotos: "GBR FIN"},
-    {id: 2, idequipo: "redbull", equiponombre: "Red Bull Racing", nacionequipo: "Austriacos", nombrepiloto: ["Max Verstappen", "Sergio Pérez Mendoza"], nacionespilotos: "NLD MX"},
-    {id: 3, idequipo: "ferrari", equiponombre: "Scuderia Ferrari", nacionequipo: "Italianos", nombrepiloto: ["Charles Leclerc", "Carlos Sainz Vázquez"], nacionespilotos: "MC ESP"},
-    {id: 4, idequipo: "mclaren", equiponombre: "McLarenF1 Team", nacionequipo: "Britanicos", nombrepiloto: ["Lando Norris", "Daniel Ricciardo"], nacionespilotos: "GBr AUS"},
-    {id: 5, idequipo: "astonmartin", equiponombre: "Aston Martin Cognizant Formula One Team", nacionequipo: "Britanicos", nombrepiloto: ["Sebastian Vettel", "Lance Stroll"], nacionespilotos: "DEU CAN"},
-]
-
-let pilotos = [
-    {id: 1, idequipo: "mercedes", nombrepiloto: "Lewis", apellidospiloto: "Hamilton", nacionpiloto: "Reino Unido", titulospiloto: "Siete veces Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/hamilton.jpg.img.1536.high.jpg"},
-    {id: 2, idequipo: "mercedes", nombrepiloto: "Valtteri", apellidospiloto: "Bottas", nacionpiloto: "Finlandia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/bottas.jpg.img.1536.high.jpg"},
-    {id: 3, idequipo: "redbull", nombrepiloto: "Max", apellidospiloto: "Verstappen", nacionpiloto: "Paises Bajos", titulospiloto: "Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/verstappen.jpg.img.640.medium.jpg/1677069646195.jpg"},
-    {id: 4, idequipo: "redbull", nombrepiloto: "Sergio", apellidospiloto: "Perez Mendoza", nacionpiloto:"Mexico", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/perez.jpg.img.1536.high.jpg"},
-    {id: 5, idequipo: "ferrari", nombrepiloto: "Charles", apellidospiloto: "Leclerc", nacionpiloto: "Monaco", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/leclerc.jpg.img.1536.high.jpg"},
-    {id: 6, idequipo: "ferrari", nombrepiloto: "Carlos", apellidospiloto: "Sainz Vazquez", nacionpiloto: "España", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/sainz.jpg.img.1536.high.jpg"},
-    {id: 7, idequipo: "mclaren", nombrepiloto: "Lando", apellidospiloto: "Norris", nacionpiloto: "Reino Unido", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/norris.jpg.img.1536.high.jpg"},
-    {id: 8, idequipo: "mclaren", nombrepiloto: "Daniel", apellidospiloto: "Ricciardo", nacionpilot: "Australia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/ricciardo.jpg.img.1536.high.jpg"},
-    {id: 9, idequipo: "astonmartin", nombrepiloto: "Sebastian", apellidospiloto: "Vettel", nacionpiloto: "Alemania", titulospiloto: "Cuatro veces Campeon del Mundo de Formula 1", imagenpiloto: "https://hips.hearstapps.com/hmg-prod/images/dsc-2917-edit-1-1645185757.jpg"},
-    {id: 10, idequipo: "astonmartin", nombrepiloto: "Lance", apellidospiloto: "Stroll", nacionpiloto: "Canada", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"}
-]
+// let equipos = [
+//     {id: 1, idequipo: "mercedes", equiponombre: "Mercedes-AMG Petronas Formula One Team", nacionequipo: "Alemanes", nombrepiloto: ["Lewis Hamilton", "Valtteri Bottas"], nacionespilotos: "GBR FIN"},
+//     {id: 2, idequipo: "redbull", equiponombre: "Red Bull Racing", nacionequipo: "Austriacos", nombrepiloto: ["Max Verstappen", "Sergio Pérez Mendoza"], nacionespilotos: "NLD MX"},
+//     {id: 3, idequipo: "ferrari", equiponombre: "Scuderia Ferrari", nacionequipo: "Italianos", nombrepiloto: ["Charles Leclerc", "Carlos Sainz Vázquez"], nacionespilotos: "MC ESP"},
+//     {id: 4, idequipo: "mclaren", equiponombre: "McLarenF1 Team", nacionequipo: "Britanicos", nombrepiloto: ["Lando Norris", "Daniel Ricciardo"], nacionespilotos: "GBr AUS"},
+//     {id: 5, idequipo: "astonmartin", equiponombre: "Aston Martin Cognizant Formula One Team", nacionequipo: "Britanicos", nombrepiloto: ["Sebastian Vettel", "Lance Stroll"], nacionespilotos: "DEU CAN"},
+// ]
+//
+// let pilotos = [
+//     {id: 1, idequipo: "mercedes", nombrepiloto: "Lewis", apellidospiloto: "Hamilton", nacionpiloto: "Reino Unido", titulospiloto: "Siete veces Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/hamilton.jpg.img.1536.high.jpg"},
+//     {id: 2, idequipo: "mercedes", nombrepiloto: "Valtteri", apellidospiloto: "Bottas", nacionpiloto: "Finlandia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/bottas.jpg.img.1536.high.jpg"},
+//     {id: 3, idequipo: "redbull", nombrepiloto: "Max", apellidospiloto: "Verstappen", nacionpiloto: "Paises Bajos", titulospiloto: "Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/verstappen.jpg.img.640.medium.jpg/1677069646195.jpg"},
+//     {id: 4, idequipo: "redbull", nombrepiloto: "Sergio", apellidospiloto: "Perez Mendoza", nacionpiloto:"Mexico", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/perez.jpg.img.1536.high.jpg"},
+//     {id: 5, idequipo: "ferrari", nombrepiloto: "Charles", apellidospiloto: "Leclerc", nacionpiloto: "Monaco", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/leclerc.jpg.img.1536.high.jpg"},
+//     {id: 6, idequipo: "ferrari", nombrepiloto: "Carlos", apellidospiloto: "Sainz Vazquez", nacionpiloto: "España", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/sainz.jpg.img.1536.high.jpg"},
+//     {id: 7, idequipo: "mclaren", nombrepiloto: "Lando", apellidospiloto: "Norris", nacionpiloto: "Reino Unido", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/norris.jpg.img.1536.high.jpg"},
+//     {id: 8, idequipo: "mclaren", nombrepiloto: "Daniel", apellidospiloto: "Ricciardo", nacionpilot: "Australia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/ricciardo.jpg.img.1536.high.jpg"},
+//     {id: 9, idequipo: "astonmartin", nombrepiloto: "Sebastian", apellidospiloto: "Vettel", nacionpiloto: "Alemania", titulospiloto: "Cuatro veces Campeon del Mundo de Formula 1", imagenpiloto: "https://hips.hearstapps.com/hmg-prod/images/dsc-2917-edit-1-1645185757.jpg"},
+//     {id: 10, idequipo: "astonmartin", nombrepiloto: "Lance", apellidospiloto: "Stroll", nacionpiloto: "Canada", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"}
+// ]
 
 const swaggerOptions ={
     swaggerDefinition: {
@@ -62,7 +62,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //
 const db = require('knex')({
     client:'sqlite3',
-    connection: './f1.sqlite'
+    connection: './f1.sqlite',
+    useNullAsDefault: true
 });
 
 function findItem(where, id){
@@ -73,19 +74,60 @@ function findItem(where, id){
     }
     return -1;
 }
+/**
+ * @swagger
+ * tags:
+ *     name: Pilotos
+ *     description: API manejo de pilotos
+ */
+/**
+ * @swagger
+ * tags:
+ *     name: Equipos
+ *     description: API manejo de equipos
+ */
 
 //////////////////////////////////////////////// API //////////////////////////////////////////////
 
                   //////////////////////////// EQUIPOS ///////////////////////////////
 /**
  * @swagger
- * tags:
- *     name: Pilotos
- *     description: API para manejar pilotos
+ * /api/equipos:
+ *   get:
+ *     tags: [Equipos]
+ *     summary: Obtener todos los equipos
+ *     description: Obtiene una lista de todos los equipos.
+ *     responses:
+ *       200:
+ *         description: Lista de equipos obtenida correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 equipos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       nombre:
+ *                         type: string
+ *                       nacion:
+ *                         type: string
+ *                       campeonatos:
+ *                         type: integer
+ *                       historia:
+ *                         type: string
+ *                       imagen:
+ *                         type: string
+ *       500:
+ *         description: Error en el servidor al obtener la lista de equipos
  */
 // MUESTRA TODOS LOS EQUIPOS
-app.get('/api/equipos', function (req, res) {
-    db.select('*')
+app.get('/api/equipos', async (req, res) => {
+    await db.select('*')
         .from('equipos')
         .then(function (data){
             data = {equipos: data}
@@ -95,109 +137,405 @@ app.get('/api/equipos', function (req, res) {
             console.log(error)
         })
 });
-
+/**
+ * @swagger
+ * /api/equipos/{id}:
+ *   get:
+ *     tags: [Equipos]
+ *     summary: Obtener un equipo por su ID
+ *     description: Obtiene un equipo específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del equipo que se desea obtener
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Equipo obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 nombre:
+ *                   type: string
+ *                 nacion:
+ *                   type: string
+ *                 campeonatos:
+ *                   type: integer
+ *                 historia:
+ *                   type: string
+ *                 imagen:
+ *                   type: string
+ *       404:
+ *         description: No se encontró el equipo con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al obtener el equipo
+ */
 // ITEMS DETAIL
-app.get('/api/equipos/:id', (req, res)=>{
+app.get('/api/equipos/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    let equipo = equipos[findItem(equipos, id)] //usamos findEquipo para no repetir mismo for aqui
-    if (!equipo){
-        res.status(404).json(' Item ' + id + ' not found')
-    }else{
-        res.status(200).json(equipo)
-    }
-
+    const result = await db.select('*').from('equipos').where('id', id);
+    res.send(result);
 });
+/**
+ * @swagger
+ * /api/equipos/update/{id}:
+ *   post:
+ *     tags: [Equipos]
+ *     summary: Actualizar un equipo por su ID
+ *     description: Actualiza los datos de un equipo específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del equipo que se desea actualizar
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               nacion:
+ *                 type: string
+ *               campeonatos:
+ *                 type: integer
+ *               historia:
+ *                 type: string
+ *               imagen:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Equipo actualizado correctamente
+ *       404:
+ *         description: No se encontró el equipo con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al intentar actualizar el equipo
+ */
 // HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
-app.post("/api/equipos/update", (req, res)=>{
-    //  Indicamos los valores que necesitamos
-    let { id, idequipo, equiponombre, nacionequipo, nombrepiloto, nacionespilotos } = req.body;
-    let foundIndex = findItem(equipos, id);
-    // Valida que esten todos los campos necesarios.
-    if (!id || !idequipo || !equiponombre || !nacionequipo || !nombrepiloto || !nacionespilotos) {
-        throw new Error('Faltan datos necesarios para la actualización.');
+app.post("/api/equipos/update/:id", async (req, res)=>{
+    let id = req.params.id;
+    let params = req.body;
+    console.log(params)
+    try{
+        await db('equipos').where('id','=' ,id).update(params);
+        res.send('Updateado correctamente')
+        console.log('Updateado id: ', id)
+    } catch (error){
+        console.log(error)
+        res.send('Error en el servidor.')
     }
-    //Actualizar base de datos
-    equipos[foundIndex].idequipo= idequipo
-    equipos[foundIndex].equiponombre = equiponombre
-    equipos[foundIndex].nacionequipo = nacionequipo
-    equipos[foundIndex].nombrepiloto = nombrepiloto
-    equipos[foundIndex].nacionespilotos = nacionespilotos
-    res.redirect('/equipos')
 });
+/**
+ * @swagger
+ * /api/equipos/{id}:
+ *   delete:
+ *     tags: [Equipos]
+ *     summary: Eliminar un equipo por su ID
+ *     description: Elimina un equipo específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del equipo que se desea eliminar
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Equipo eliminado correctamente
+ *       404:
+ *         description: No se encontró el equipo con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al intentar eliminar el equipo
+ */
 // ELIMINAR UN ITEM DE EQUIPOS POR ID
-app.delete('/api/equipos/:id', (req, res)=>{
+app.delete('/api/equipos/:id', async (req, res)=>{
     const id = parseInt(req.params.id)
-    let foundIndex = findItem(equipos, id)
-    if (foundIndex == -1){ // si no encuentra
-        res.status(404).send('not found')
-    }else {
-        equipos.splice(foundIndex,1)
-        res.status(204).send()
-        console.log('Equipo eliminado correctamente')
+    try{
+        await db('equipos').where('id','=',id).del();
+        res.send('Eliminado correctamente')
+    }catch (e){
+        console.log(e);
+        res.send('Error en el servidor')
     }
 });
+/**
+ * @swagger
+ * /api/equipos:
+ *   post:
+ *     tags: [Equipos]
+ *     summary: Insertar un nuevo equipo
+ *     description: Inserta un nuevo equipo con los datos proporcionados.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *               nombre:
+ *                 type: string
+ *               nacion:
+ *                 type: string
+ *               campeonatos:
+ *                 type: integer
+ *               historia:
+ *                 type: string
+ *               imagen:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Nuevo equipo insertado correctamente
+ *       500:
+ *         description: Error en el servidor al insertar el nuevo equipo
+ */
 // INSERTAR UN NUEVO ITEM A EQUIPOS
-app.post('/api/equipos',(req, res)=>{
-    let params = req.body
-    params.id = equipos.length +1
-    equipos.push(params)
-    res.status(201).json(params)
-    console.log('Agregado Correctamente')
+app.post('/api/equipos', async (req, res)=>{
+    const params = req.body;
+    console.log(params);
+    try{
+        await db('equipos').insert(params);
+        res.send('Insertado correctamente')
+    }catch (e) {
+        console.log(e)
+        res.send('Error en el servidor')
+    }
+
 });
+
                     //////////////////////////// PILOTOS ///////////////////////////////
-
+/**
+ * @swagger
+ * /api/pilotos:
+ *   get:
+ *     summary: Obtener todos los pilotos
+ *     description: Obtiene una lista de todos los pilotos.
+ *     tags:
+ *       - Pilotos
+ *     responses:
+ *       200:
+ *         description: Lista de pilotos obtenida correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 pilotos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       nombre:
+ *                         type: string
+ *                       equipo_id:
+ *                         type: integer
+ *                       puntos:
+ *                         type: integer
+ *                       edad:
+ *                         type: integer
+ *       500:
+ *         description: Error en el servidor al obtener la lista de pilotos
+ *     servers:
+ *       - url: http://localhost:3000
+ */
 // MUESTRA TODOS LOS PILOTOS
-app.get('/api/pilotos', (req, res) => {
-    res.status(200).send(pilotos)
+app.get('/api/pilotos',async (req, res) => {
+    await db.select('*')
+        .from('pilotos')
+        .then(function (data){
+            data = {pilotos: data}
+            res.send(data)
+        })
+        .catch(function (error){
+            console.log(error)
+        })
 });
+/**
+ * @swagger
+ * /api/pilotos/{id}:
+ *   get:
+ *     summary: Obtener un piloto por su ID
+ *     description: Obtiene un piloto específico basado en su ID.
+ *     tags:
+ *       - Pilotos
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del piloto que se desea obtener
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Piloto obtenido correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   nombre:
+ *                     type: string
+ *                   equipo_id:
+ *                     type: integer
+ *                   puntos:
+ *                     type: integer
+ *                   edad:
+ *                     type: integer
+ *       404:
+ *         description: No se encontró el piloto con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al obtener el piloto
+ *     servers:
+ *       - url: http://localhost:3000
+ */
 // ITEMS DETAIL
-app.get('/api/pilotos/:id', (req, res)=>{
+app.get('/api/pilotos/:id',async (req, res)=>{
     const id = parseInt(req.params.id)
-    let piloto = pilotos[findItem(pilotos, id)] //usamos findEquipo para no repetir mismo for aqui
-    if (!piloto){
-        res.status(404).json(' Item ' + id + ' not found')
-    }else{
-        res.status(200).json(piloto)
-    }
+    const result = await db.select('*').from('pilotos').where('id', id);
+    res.send(result);
+});
+/**
+ * @swagger
+ * /api/pilotos/update/{id}:
+ *   post:
+ *     tags: [Pilotos]
+ *     summary: Actualizar un piloto por su ID
+ *     description: Actualiza los datos de un piloto específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del piloto que se desea actualizar
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               equipo_id:
+ *                 type: integer
+ *               puntos:
+ *                 type: integer
+ *               edad:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Piloto actualizado correctamente
+ *       404:
+ *         description: No se encontró el piloto con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al intentar actualizar el piloto
+ */
 
-});
 // HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
-app.post("/api/pilotos/update", (req, res)=>{
-    //  Indicamos los valores que necesitamos
-    let { id, idequipo, nombrepiloto, apellidospiloto, nacionpiloto, titulospiloto, imagenpiloto } = req.body;
-    let foundIndex = findItem(pilotos, id);
-    // Valida que esten todos los campos necesarios.
-    if (!id || !idequipo || !nombrepiloto || !apellidospiloto || !nacionpiloto || !titulospiloto || !imagenpiloto) {
-        throw new Error('Faltan datos necesarios para la actualización.');
+app.post("/api/pilotos/update/:id", async (req, res)=>{
+    let id = req.params.id;
+    let params = req.body;
+    console.log(params)
+    try{
+        await db('pilotos').where('id','=' ,id).update(params);
+        res.send('Updateado correctamente')
+        console.log('Updateado id: ', id)
+    } catch (error){
+        console.log(error)
+        res.send('Error en el servidor.')
     }
-    //Actualizar base de datos
-    pilotos[foundIndex].idequipo= idequipo
-    pilotos[foundIndex].nombrepiloto = nombrepiloto
-    pilotos[foundIndex].apellidospiloto = apellidospiloto
-    pilotos[foundIndex].nacionpiloto = nacionpiloto
-    pilotos[foundIndex].titulospiloto = titulospiloto
-    pilotos[foundIndex].imagenpiloto = imagenpiloto
-    res.redirect('/pilotos')
 });
+/**
+ * @swagger
+ * /api/pilotos/{id}:
+ *   delete:
+ *     tags: [Pilotos]
+ *     summary: Eliminar un piloto por su ID
+ *     description: Elimina un piloto específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID del piloto que se desea eliminar
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Piloto eliminado correctamente
+ *       404:
+ *         description: No se encontró el piloto con el ID proporcionado
+ *       500:
+ *         description: Error en el servidor al intentar eliminar el piloto
+ */
 // ELIMINAR UN ITEM DE PILOTOS POR ID
-app.delete('/api/pilotos/:id', (req, res)=>{
+app.delete('/api/pilotos/:id',async (req, res)=>{
     const id = parseInt(req.params.id)
-    let foundIndex = findItem(pilotos, id)
-    if (foundIndex == -1){ // si no encuentra
-        res.status(404).send('not found')
-    }else {
-        pilotos.splice(foundIndex,1)
-        res.status(204).send()
-        console.log('Piloto eliminado correctamente')
+    try{
+        await db('pilotos').where('id','=',id).del();
+        res.send('Eliminado correctamente')
+    }catch (e){
+        console.log(e);
+        res.send('Error en el servidor')
     }
 });
+/**
+ * @swagger
+ * /api/pilotos:
+ *   post:
+ *     summary: Insertar un nuevo piloto
+ *     description: Inserta un nuevo piloto con los datos proporcionados.
+ *     tags:
+ *       - Pilotos
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               equipo_id:
+ *                 type: integer
+ *               puntos:
+ *                 type: integer
+ *               edad:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Nuevo piloto insertado correctamente
+ *       500:
+ *         description: Error en el servidor al insertar el nuevo piloto
+ */
 // INSERTAR UN NUEVO ITEM A PILOTOS
-app.post('/api/pilotos',(req, res)=>{
-    let params = req.body
-    params.id = pilotos.length +1
-    pilotos.push(params)
-    res.status(201).json(params)
-    console.log('Agregado Correctamente')
+app.post('/api/pilotos', async (req, res)=>{
+    const params = req.body;
+    console.log(params);
+    try{
+        await db('pilotos').insert(params);
+        res.send('Insertado correctamente')
+    }catch (e) {
+        console.log(e)
+        res.send('Error en el servidor')
+    }
 });
 
 
@@ -208,33 +546,23 @@ app.post('/api/pilotos',(req, res)=>{
             //////////////////////////// PILOTOS ///////////////////////////////
 
 // INDEX
-/**
- * @swagger
- *
- * /:
- *  get:
- *      summary: Es para mostrar el index principal de la pagina
- *      description: Es para mostrar el index principal de la pagina
- *      responses:
- *          200:
- *              description: Para probar el metodo GET
- */
+
 app.get('/', (req, res) => {
     res.render('index',{title:'WEB DE F1'})
 });
 
 // Show ALL Items
-// app.get('/pilotos', (req, res) => {
-//     res.render('pilotos',
-//         {
-//             title:'PILOTOS',
-//             pilotos:pilotos    }
-//     )
-// })
-
 app.get('/pilotos', (req, res) => {
-    res.render('insert_piloto.ejs')
+    res.render('pilotos',
+        {
+            title:'PILOTOS',
+            pilotos:pilotos    }
+    )
 })
+
+// app.get('/pilotos', (req, res) => {
+//     res.render('pilotos.ejs')
+// })
 
 // Update quipo
 app.post("/pilotos/update", (req, res)=>{

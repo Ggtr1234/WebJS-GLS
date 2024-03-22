@@ -30,6 +30,10 @@
                 <td><%= equipo.campeonatos %></td>
                 <td><%= equipo.historia %></td>
                 <td><img src="<%= equipo.imagen %>" alt="<%= equipo.nombre %>" height="150px"></td>
+                <td>
+                    <a href="#" data-piloto-id="<%= equipo.id%>" class="action_delete_piloto">Delete</a>
+                    <a href="/equipos/update/<%= equipo.id%>" >Update</a>
+                </td>
             </tr>
         <% }); %>
     <% } else { %>
@@ -37,6 +41,9 @@
             <td colspan="6">No se encontraron equipos</td>
         </tr>
     <% } %>
+    <tr>
+
+    </tr>
     </tbody>
 </table>
 
