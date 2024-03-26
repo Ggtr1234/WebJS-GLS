@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <%- include('partials/navbar.html') %>
+</head>
+<body>
+    <form id="contactForm" action="/" method="GET" onsubmit="return validateForm()" class="contact-form">
+        <h2>Contacto</h2>
+        <input type="text" name="nom" placeholder="Nom" required class="form-input">
+        <input type="text" name="cognom" placeholder="Cognom" required class="form-input">
+        <input type="email" name="email" placeholder="Correu electrònic" required class="form-input">
+        <input type="tel" name="telefon" placeholder="Telèfon" required class="form-input">
+        <input type="submit" value="Enviar" class="form-submit">
+    </form>
+</body>
+<script>
+    function validateForm() {
+        var nom = document.forms["contactForm"]["nom"].value;
+        var cognom = document.forms["contactForm"]["cognom"].value;
+        var email = document.forms["contactForm"]["email"].value;
+        var telefon = document.forms["contactForm"]["telefon"].value;
+
+        if (nom == "" || cognom == "" || email == "" || telefon == "") {
+            alert("Si us plau, omple tots els camps.");
+            return false;
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Si us plau, introdueix un correu electrònic vàlid.");
+            return false;
+        }
+
+        var telefonRegex = /^\d{9}$/;
+        if (!telefonRegex.test(telefon)) {
+            alert("Si us plau, introdueix un número de telèfon vàlid de 9 dígits.");
+            return false;
+        }
+
+        alert("Formulari enviat amb èxit!");
+        return true;
+    }
+
+</script>
+<%- include('partials/footer.html') %>
+</html>
+

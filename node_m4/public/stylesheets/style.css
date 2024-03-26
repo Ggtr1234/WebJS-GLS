@@ -1,8 +1,109 @@
 body {
-  padding: 50px;
+  margin: 0px !important;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #ffc700;
+}
+/*
+Barra navegacion
+ */
+.navbar {
+  background-color: #333;
+  padding: 15px 0;
+}
+
+.container {
+  margin: 10px 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+/*
+Formulario
+ */
+.contact-form {
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-input,
+.form-submit {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form-submit {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+}
+
+/*
+caracteristicas
+ */
+.features {
+  padding: 50px 0;
+}
+
+.feature {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.feature-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.feature-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.feature-description {
+  font-size: 18px;
+  line-height: 1.5;
 }

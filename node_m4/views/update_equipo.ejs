@@ -2,28 +2,32 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <%- include('partials/navbar.html') %>
 </head>
 <body>
 <h1> UPDATE ITEM</h1>
-<form action="/api/equipos/update" method="POST">
+<form action="/equipos/update" method="POST">
 
     <input id="id" type="hidden" name="id" value="<%= item.id%>">
-    <input id="idequipo" type="hidden" name="idequipo" value="<%= item.idequipo%>">
 
-    <label for="equiponombre">Nombre Equipo</label>
-    <input id="equiponombre" type="text" name="equiponombre" value="<%= item.equiponombre%>" >
+    <label for="nombre">Nombre</label>
+    <input id="nombre" type="text" name="nombre" value="<%= item.nombre%>" >
 
-    <label for="nacionequipo">Nacion equipo</label>
-    <input id="nacionequipo" type="text" name="nacionequipo" value="<%= item.nacionequipo%>" >
+    <label for="nacion">Nacion</label>
+    <input id="nacion" type="text" name="nacion" value="<%= item.nacion%>" >
 
-    <label for="nombrepiloto">Nombre pilotos</label>
-    <input id="nombrepiloto" type="text" name="nombrepiloto" value="<%= item.nombrepiloto%>" >
+    <label for="campeonatos">Campeonatos</label>
+    <input id="campeonatos" type="text" name="campeonatos" value="<%= item.campeonatos%>" >
 
-    <label for="nacionespilotos">Naciones pilotos</label>
-    <input id="nacionespilotos" type="text" name="nacionespilotos" value="<%= item.nacionespilotos%>" >
+    <label for="historia">Historia</label>
+    <input id="historia" type="text" name="historia" value="<%= item.historia%>" >
+
+    <label for="imagen">Imagen</label>
+    <input id="imagen" type="text" name="imagen" value="<%= item.imagen%>" >
 
 
     <input type="submit" value="update">
 </form>
 </body>
+<%- include('partials/footer.html') %>
 </html>

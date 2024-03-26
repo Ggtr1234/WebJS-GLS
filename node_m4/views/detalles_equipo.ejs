@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/equipos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1> Detalles del Equipo</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Nación</th>
+        <th>Campeonatos</th>
+        <th>Historia</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (equipo) { %>
+        <tr>
+            <td><%= equipo.id %></td>
+            <td><%= equipo.nombre %></td>
+            <td><%= equipo.nacion %></td>
+            <td><%= equipo.campeonatos %></td>
+            <td><%= equipo.historia %></td>
+            <td><img src="<%= equipo.imagen %>" alt="<%= equipo.nombre %>" height="150px"></td>
+            <td>
+                <a href="/equipos" data-equipo-id="<%= equipo.id%>" class="action_delete_equipo">Eliminar</a>
+                <a href="/equipos/update/<%= equipo.id %>" >Actualizar</a>
+            </td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td colspan="7">No se encontró el equipo</td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+
+<script>
+    async function delete_equipo(evt){
+        evt.preventDefault();
+        let id = $(this).data('equipo-id');
+        try {
+            await $.ajax({
+                url: '/api/equipos/'  + id,
+                type: 'DELETE'
+            });
+            window.location.reload();
+
+        } catch (e) {
+            console.log('Error' + e.status + " " + e.statusText);
+        }
+    }
+
+    $(document).ready(() =>{
+        $('.action_delete_equipo').click(delete_equipo);
+    });
+</script>
+
+</body>
+<%- include('partials/footer.html') %>
+</html>

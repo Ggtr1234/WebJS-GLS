@@ -19,27 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
 
-// let equipos = [
-//     {id: 1, idequipo: "mercedes", equiponombre: "Mercedes-AMG Petronas Formula One Team", nacionequipo: "Alemanes", nombrepiloto: ["Lewis Hamilton", "Valtteri Bottas"], nacionespilotos: "GBR FIN"},
-//     {id: 2, idequipo: "redbull", equiponombre: "Red Bull Racing", nacionequipo: "Austriacos", nombrepiloto: ["Max Verstappen", "Sergio Pérez Mendoza"], nacionespilotos: "NLD MX"},
-//     {id: 3, idequipo: "ferrari", equiponombre: "Scuderia Ferrari", nacionequipo: "Italianos", nombrepiloto: ["Charles Leclerc", "Carlos Sainz Vázquez"], nacionespilotos: "MC ESP"},
-//     {id: 4, idequipo: "mclaren", equiponombre: "McLarenF1 Team", nacionequipo: "Britanicos", nombrepiloto: ["Lando Norris", "Daniel Ricciardo"], nacionespilotos: "GBr AUS"},
-//     {id: 5, idequipo: "astonmartin", equiponombre: "Aston Martin Cognizant Formula One Team", nacionequipo: "Britanicos", nombrepiloto: ["Sebastian Vettel", "Lance Stroll"], nacionespilotos: "DEU CAN"},
-// ]
-//
-// let pilotos = [
-//     {id: 1, idequipo: "mercedes", nombrepiloto: "Lewis", apellidospiloto: "Hamilton", nacionpiloto: "Reino Unido", titulospiloto: "Siete veces Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/hamilton.jpg.img.1536.high.jpg"},
-//     {id: 2, idequipo: "mercedes", nombrepiloto: "Valtteri", apellidospiloto: "Bottas", nacionpiloto: "Finlandia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/bottas.jpg.img.1536.high.jpg"},
-//     {id: 3, idequipo: "redbull", nombrepiloto: "Max", apellidospiloto: "Verstappen", nacionpiloto: "Paises Bajos", titulospiloto: "Campeon del Mundo de Formula 1", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/verstappen.jpg.img.640.medium.jpg/1677069646195.jpg"},
-//     {id: 4, idequipo: "redbull", nombrepiloto: "Sergio", apellidospiloto: "Perez Mendoza", nacionpiloto:"Mexico", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/perez.jpg.img.1536.high.jpg"},
-//     {id: 5, idequipo: "ferrari", nombrepiloto: "Charles", apellidospiloto: "Leclerc", nacionpiloto: "Monaco", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/leclerc.jpg.img.1536.high.jpg"},
-//     {id: 6, idequipo: "ferrari", nombrepiloto: "Carlos", apellidospiloto: "Sainz Vazquez", nacionpiloto: "España", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/sainz.jpg.img.1536.high.jpg"},
-//     {id: 7, idequipo: "mclaren", nombrepiloto: "Lando", apellidospiloto: "Norris", nacionpiloto: "Reino Unido", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/norris.jpg.img.1536.high.jpg"},
-//     {id: 8, idequipo: "mclaren", nombrepiloto: "Daniel", apellidospiloto: "Ricciardo", nacionpilot: "Australia", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/ricciardo.jpg.img.1536.high.jpg"},
-//     {id: 9, idequipo: "astonmartin", nombrepiloto: "Sebastian", apellidospiloto: "Vettel", nacionpiloto: "Alemania", titulospiloto: "Cuatro veces Campeon del Mundo de Formula 1", imagenpiloto: "https://hips.hearstapps.com/hmg-prod/images/dsc-2917-edit-1-1645185757.jpg"},
-//     {id: 10, idequipo: "astonmartin", nombrepiloto: "Lance", apellidospiloto: "Stroll", nacionpiloto: "Canada", titulospiloto: "No tiene", imagenpiloto: "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"}
-// ]
-
 const swaggerOptions ={
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -577,6 +556,36 @@ app.post('/api/pilotos', async (req, res)=>{
 app.get('/', (req, res) => {
     res.render('index',{title:'Formula 1'})
 });
+
+app.get('/contact', (req, res) => {
+    res.render('contact',{title:'Contacto'})
+});
+app.get('/about', (req, res) => {
+    res.render('about',{title:'About'})
+});
+
+app.get('/equipos/detalles/:id',async (req, res) => {
+    const id = req.params.id
+    const query = await db('equipos').where('id', '=', id).first();
+    console.log(query)
+    const params = {
+        title: 'Detalles Equipo',
+        equipo: query
+    }
+    res.render('detalles_equipo', params)
+});
+
+app.get('/pilotos/detalles/:id',async (req, res) => {
+    const id = req.params.id
+    const query = await db('pilotos').where('id', '=', id).first();
+    console.log(query)
+    const params = {
+        title: 'Detalles Piloto',
+        piloto: query
+    }
+    res.render('detalles_piloto', params)
+});
+
 // /**
 //  * @swagger
 //  * /pilotos:
@@ -783,7 +792,7 @@ app.get('/equipos', async (req, res) => {
     res.render('equipos', params);
 });
 // Update quipo
-app.post("/pilotos/update", async (req, res)=>{
+app.post("/equipos/update", async (req, res)=>{
     const params = req.body
     console.log('params',params)
     try {
@@ -815,13 +824,13 @@ app.post('/equipos/insert',async (req, res)=>{
     }
 });
 // UPDATE ITEM
-app.get('/pilotos/update/:id', async (req,res)=>{
+app.get('/equipos/update/:id', async (req,res)=>{
     const id = req.params.id
     const query = await db('equipos').where('id', '=', id).first();
     console.log(query)
     const params = {
         title: 'Update Equipo',
-        pilotos: query
+        item: query
     }
     res.render('update_equipo', params)
 });

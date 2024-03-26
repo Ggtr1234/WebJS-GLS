@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1> Detalles del Piloto</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>ID equipo</th>
+        <th>Nombre piloto</th>
+        <th>Edad</th>
+        <th>Nación</th>
+        <th>Titulos</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (piloto) { %>
+
+        <tr>
+            <td> <%= piloto.id %> </td>
+            <td> <%= piloto.nombreEquipo %></td>
+            <td> <%= piloto.nombre %></td>
+            <td> <%= piloto.edad %></td>
+            <td> <%= piloto.nacion %></td>
+            <td> <%= piloto.premios %></td>
+            <td><img src="<%= piloto.imagen %>" alt="" height="150px"></td>
+            <td>
+                <a href="#" data-piloto-id="<%= piloto.id%>" class="action_delete_piloto">Eliminar</a>
+                <a href="/pilotos/update/<%= piloto.id%>" >Actualizar</a>
+            </td>
+        </tr>
+
+    <% } else { %>
+        <tr>
+            <td colspan="8">No se encontró el piloto</td>
+        </tr>
+    <% } %>
+
+    </tbody>
+</table>
+
+<script>
+    async function delete_piloto(evt){
+        evt.preventDefault(); // Detener el comportamiento por defecto
+        let id = $(this).data('piloto-id');
+        try {
+            await $.ajax({
+                url: '/api/pilotos/'  + id,
+                type: 'DELETE'
+            });
+            window.location.reload();
+
+        } catch (e) {
+            console.log('Error' + e.status + " " + e.statusText);
+        }
+    }
+
+    $(document).ready(() =>{
+        $('.action_delete_piloto').click(delete_piloto);
+    });
+</script>
+
+</body>
+<%- include('partials/footer.html') %>
+</html>

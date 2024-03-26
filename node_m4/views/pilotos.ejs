@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>oo</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
-
+    <title><%=title%></title>
+    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
+    <%- include('partials/navbar.html') %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -36,6 +36,7 @@
             <td>
                 <a href="#" data-piloto-id="<%= pilotos.id%>" class="action_delete_piloto">Delete</a>
                 <a href="/pilotos/update/<%= pilotos.id%>" >Update</a>
+                <a href="/pilotos/detalles/<%= pilotos.id%>">Detalles</a>
             </td>
 
         </tr>
@@ -68,4 +69,5 @@
 </script>
 
 </body>
+<%- include('partials/footer.html') %>
 </html>

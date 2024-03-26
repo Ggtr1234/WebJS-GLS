@@ -3,17 +3,35 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <%- include('partials/navbar.html') %>
+
 </head>
 <body>
+<header class="header">
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/120px-F1.svg.png" alt="Formula 1" class="logo">
+    </div>
+</header>
 
-<h1>web de items</h1>
-<ul>
-    <li><a href="/equipos">get all equipos</a><br></li>
-    <li><a href="/pilotos">get all pilotos</a></li>
-    <li><a href="/equipos/insert">insert equipo</a></li>
-    <li><a href="/pilotos/insert">insert piloto</a></li>
-</ul>
+
+<section class="features">
+    <div class="container">
+        <div class="feature">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/as-formula-1-returns-to-the-grid-for-the-2024-season-the-news-photo-1708599152.jpg?crop=0.872xw:0.777xh;0.0801xw,0.0571xh&resize=1200:*" alt="Pilotos" class="feature-img">
+            <h3 class="feature-title">Pilotos</h3>
+            <p class="feature-description">Conoce a los pilotos más talentosos del mundo de la Formula 1.</p>
+            <a href="/pilotos" class="btn btn-secondary">Ver más</a>
+        </div>
+        <div class="feature">
+            <img src="https://cdn-5.motorsport.com/images/amp/2d1LK3BY/s1000/formula-1-2022-la-parrilla-de--4.jpg" alt="Equipos" class="feature-img">
+            <h3 class="feature-title">Equipos</h3>
+            <p class="feature-description">Explora los equipos y sus increíbles máquinas de carreras.</p>
+            <a href="/equipos" class="btn btn-secondary">Ver más</a>
+        </div>
+    </div>
+</section>
+
 
 </body>
+<%- include('partials/footer.html') %>
 </html>
