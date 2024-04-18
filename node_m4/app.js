@@ -47,14 +47,18 @@ const swaggerOptions ={
     apis: ['app.js']
 };
 // Swagger
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    const swaggerSpec = swaggerJSDoc(swaggerOptions);
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //
-const db = require('knex')({
-    client:'sqlite3',
-    connection: './f1.sqlite',
-});
+// const db = require('knex')({
+//     client:'sqlite3',
+//     connection: './f1.sqlite',
+// });
 
+const mongoose = require('mongoose');
+const piloto = require('./models/Piloto.js');
+const equipo = require('./models/Equipo.js');
+mongoose.connect("mongodb://127.0.0.1:27017/f1?retryWrites=true&w=majority");
 function findItem(where, id){
     for (let i = 0; i < where.length ; i++) {
         if (where[i].id == id){
@@ -63,6 +67,19 @@ function findItem(where, id){
     }
     return -1;
 }
+
+mongoose.connection.on('connected', () => {
+    console.log(`Conexión establecida con la base de datos: ${mongoose.connection.name}`);
+});
+
+mongoose.connection.on('error', (err) => {
+    console.error(`Error de conexión a MongoDB: ${err}`);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Desconectado de MongoDB');
+});
+
 /**
  * @swagger
  * tags:
@@ -81,50 +98,61 @@ function findItem(where, id){
                   //////////////////////////// EQUIPOS ///////////////////////////////
 /**
  * @swagger
- * /api/equipos:
- *   get:
- *     tags: [API Equipos]
- *     summary: Obtener todos los equipos
- *     description: Obtiene una lista de todos los equipos.
- *     responses:
- *       200:
- *         description: Lista de equipos obtenida correctamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 equipos:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: integer
- *                       nombre:
- *                         type: string
- *                       nacion:
- *                         type: string
- *                       campeonatos:
- *                         type: integer
- *                       historia:
- *                         type: string
- *                       imagen:
- *                         type: string
- *       500:
- *         description: Error en el servidor al obtener la lista de equipos
+ * paths:
+ *   /api/equipos:
+ *     get:
+ *       summary: Obtiene todos los equipos
+ *       description: Retorna una lista de todos los equipos registrados.
+ *       responses:
+ *         '200':
+ *           description: OK. Lista de equipos obtenida con éxito.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   equipos:
+ *                     type: array
+ *                     items:
+ *                       $ref: '#/components/schemas/Equipo'
+ *         '500':
+ *           description: Error interno del servidor. No se pudo obtener la lista de equipos.
+ * components:
+ *   schemas:
+ *     Equipo:
+ *       type: object
+ *       properties:
+ *         idequipo:
+ *           type: string
+ *           description: ID del equipo.
+ *         equiponombre:
+ *           type: string
+ *           description: Nombre del equipo.
+ *         nacionequipo:
+ *           type: string
+ *           description: Nacionalidad del equipo.
+ *         nombrepiloto:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Lista de nombres de pilotos del equipo.
+ *         nacionespilotos:
+ *           type: string
+ *           description: Nacionalidades de los pilotos del equipo.
  */
 // MUESTRA TODOS LOS EQUIPOS
 app.get('/api/equipos', async (req, res) => {
-    await db.select('*')
-        .from('equipos')
-        .then(function (data){
-            data = {equipos: data}
-            res.send(data)
-        })
-        .catch(function (error){
-            console.log(error)
-        })
+    // await db.select('*')
+    //     .from('equipos')
+    //     .then(function (data){
+    //         data = {equipos: data}
+    //         res.send(data)
+    //     })
+    //     .catch(function (error){
+    //         console.log(error)
+    //     })
+    const equipos = await equipo.find({});
+    res.status(200).json({equipos});
 });
 /**
  * @swagger
@@ -781,8 +809,7 @@ app.post('/pilotos/insert',async (req, res)=>{
 //  */
 // Show ALL Items
 app.get('/equipos', async (req, res) => {
-    const query = await db('equipos')
-        .select('*')
+    const query = await equipo.find({})
     // console.log(query)
     const params = {
         title: 'Equipos',
