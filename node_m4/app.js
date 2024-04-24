@@ -631,9 +631,7 @@ app.get('/pilotos/detalles/:id',async (req, res) => {
 //  */
 // Show ALL Items
 app.get('/pilotos', async (req, res) => {
-    const query = await db('pilotos')
-        .select('pilotos.id', 'pilotos.nombre', 'pilotos.edad', 'pilotos.nacion', 'pilotos.premios', 'pilotos.imagen', 'equipos.nombre AS nombreEquipo')
-        .leftJoin('equipos', 'pilotos.idEquipo', 'equipos.id')
+    const query = await piloto.find({})
     // console.log(query)
     const params = {
         title: 'Pilotos',

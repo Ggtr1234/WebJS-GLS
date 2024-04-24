@@ -15,7 +15,7 @@
         <th>ID</th>
         <th>ID equipo</th>
         <th>Nombre piloto</th>
-        <th>Edad</th>
+        <th>Apellidos</th>
         <th>Nacion</th>
         <th>Titulos</th>
         <th>Imagen</th>
@@ -27,12 +27,12 @@
 
         <tr>
             <td> <%= pilotos.id %> </td>
-            <td> <%= pilotos.nombreEquipo %></td>
-            <td> <%= pilotos.nombre %></td>
-            <td> <%= pilotos.edad %></td>
-            <td> <%= pilotos.nacion %></td>
-            <td> <%= pilotos.premios %></td>
-            <td><img src="<%= pilotos.imagen %>" alt="" height="150px"></td>
+            <td> <%= pilotos.idequipo %></td>
+            <td> <%= pilotos.nombrepiloto %></td>
+            <td> <%= pilotos.apellidospiloto %></td>
+            <td> <%= pilotos.nacionpiloto %></td>
+            <td> <%= pilotos.titulospiloto %></td>
+            <td><img src="<%= pilotos.imagenpiloto %>" alt="" height="150px"></td>
             <td>
                 <a href="#" data-piloto-id="<%= pilotos.id%>" class="action_delete_piloto">Delete</a>
                 <a href="/pilotos/update/<%= pilotos.id%>" >Update</a>
