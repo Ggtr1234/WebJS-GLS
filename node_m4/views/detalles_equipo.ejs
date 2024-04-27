@@ -15,29 +15,30 @@
         <th>ID</th>
         <th>Nombre</th>
         <th>Nación</th>
-        <th>Campeonatos</th>
-        <th>Historia</th>
-        <th>Imagen</th>
+        <th>Nombres Pilotos</th>
+        <th>Naciones pilotos</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <% if (equipo) { %>
-        <tr>
-            <td><%= equipo.id %></td>
-            <td><%= equipo.nombre %></td>
-            <td><%= equipo.nacion %></td>
-            <td><%= equipo.campeonatos %></td>
-            <td><%= equipo.historia %></td>
-            <td><img src="<%= equipo.imagen %>" alt="<%= equipo.nombre %>" height="150px"></td>
-            <td>
-                <a href="/equipos" data-equipo-id="<%= equipo.id%>" class="action_delete_equipo">Eliminar</a>
-                <a href="/equipos/update/<%= equipo.id %>" >Actualizar</a>
-            </td>
-        </tr>
-    <% } else { %>
-        <tr>
-            <td colspan="7">No se encontró el equipo</td>
+        <% if (equipo) { %>
+            <tr>
+                <td><%= equipo._id %></td>
+                <td><%= equipo.equiponombre %></td>
+                <td><%= equipo.nacionequipo %></td>
+                <td><%= equipo.nombrepiloto %></td>
+                <td><%= equipo.nacionespilotos %></td>
+                <td>
+                    <a href="/equipos" data-equipo-id="<%= equipo.id%>" class="action_delete_equipo">Eliminar</a>
+                    <a href="/equipos/update/<%= equipo.id %>" >Actualizar</a>
+                </td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td colspan="7">No se encontró el equipo</td>
+            </tr>
+            <tr>
+            <td colspan="6">No se encontraron equipos</td>
         </tr>
     <% } %>
     </tbody>
