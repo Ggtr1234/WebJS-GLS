@@ -1,4 +1,0 @@
-Arrancar el servidor con la configuracion correcta del IDE con NODE.js
-sino no va swagger, no lee los comentariosde documentacion.
-    Error: No operations defined in spec!
-
