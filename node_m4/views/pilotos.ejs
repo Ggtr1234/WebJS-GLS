@@ -23,24 +23,22 @@
     </tr>
     </thead>
     <tbody>
-    <% pilotos.forEach( function (pilotos){ %>
-
+    <% pilotos.forEach(function(piloto) { %>
         <tr>
-            <td> <%= pilotos.id %> </td>
-            <td> <%= pilotos.idequipo %></td>
-            <td> <%= pilotos.nombrepiloto %></td>
-            <td> <%= pilotos.apellidospiloto %></td>
-            <td> <%= pilotos.nacionpiloto %></td>
-            <td> <%= pilotos.titulospiloto %></td>
-            <td><img src="<%= pilotos.imagenpiloto %>" alt="" height="150px"></td>
+            <td><%= piloto._id %></td>
+            <td><%= piloto.equipo.equiponombre %></td>
+            <td><%= piloto.nombrepiloto %></td>
+            <td><%= piloto.apellidospiloto %></td>
+            <td><%= piloto.nacionpiloto %></td>
+            <td><%= piloto.titulospiloto %></td>
+            <td><img src="<%= piloto.imagenpiloto %>" alt="" height="150px"></td>
             <td>
-                <a href="#" data-piloto-id="<%= pilotos.id%>" class="action_delete_piloto">Delete</a>
-                <a href="/pilotos/update/<%= pilotos.id%>" >Update</a>
-                <a href="/pilotos/detalles/<%= pilotos.id%>">Detalles</a>
+                <a href="#" data-piloto-id="<%= piloto._id %>" class="action_delete_piloto">Delete</a>
+                <a href="/pilotos/update/<%= piloto._id %>">Update</a>
+                <a href="/pilotos/detalles/<%= piloto._id %>">Detalles</a>
             </td>
-
         </tr>
-    <% } ) %>
+    <% }); %>
 
     </tbody>
 </table>

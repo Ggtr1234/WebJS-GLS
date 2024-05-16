@@ -1,37 +1,20 @@
 const mongoose = require('mongoose');
 
 const pilotoSchema = new mongoose.Schema({
-    idequipo: {
-        type: String,
-        required: true,
-        ref: 'Equipo'
+
+    equipo: {
+        _id: mongoose.Schema.Types.ObjectId,
+        idequipo: String,
+        equiponombre: String,
+        nacionequipo: String,
+        nombrepiloto: String,
+        nacionespilotos: String
     },
-    nombrepiloto: {
-        type: String,
-        required: true
-    },
-    apellidospiloto: {
-        type: String,
-        required: true
-    },
-    nacionpiloto: {
-        idnacion: {
-            type: String,
-            required: true
-        },
-        "#text": {
-            type: String,
-            required: true
-        }
-    },
-    titulospiloto: {
-        type: String,
-        required: true
-    },
-    imagenpiloto: {
-        type: String,
-        required: true
-    }
+    nombrepiloto: String,
+    apellidospiloto: String,
+    nacionpiloto: String,
+    titulospiloto: String,
+    imagenpiloto: String
 });
 
 const Piloto = mongoose.model('Piloto', pilotoSchema);

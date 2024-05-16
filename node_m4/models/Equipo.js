@@ -17,7 +17,6 @@ const equipoSchema = new mongoose.Schema({
     nombrepiloto: [{
         type: String,
         required: true,
-        ref: 'Piloto'
     }],
     nacionespilotos: {
         type: String,

@@ -217,7 +217,7 @@ app.post("/api/equipos/update/:id", async (req, res)=>{
 app.delete('/api/equipos/:id', async (req, res)=>{
     const id = parseInt(req.params.id)
     try{
-        await db('equipos').where('id','=',id).del();
+        await equipo.findById(id);
         res.send('Eliminado correctamente')
     }catch (e){
         console.log(e);
@@ -401,13 +401,18 @@ app.post("/api/pilotos/update/:id", async (req, res)=>{
 
 // ELIMINAR UN ITEM DE PILOTOS POR ID
 app.delete('/api/pilotos/:id',async (req, res)=>{
-    const id = parseInt(req.params.id)
-    try{
-        await db('pilotos').where('id','=',id).del();
-        res.send('Eliminado correctamente')
-    }catch (e){
-        console.log(e);
-        res.send('Error en el servidor')
+    const id = req.params.id;
+
+    try {
+        const deletedPiloto = await piloto.findOneAndDelete({ _id: id });
+
+        if (!deletedPiloto) {
+            return res.status(404).json({ error: 'Piloto no encontrado' });
+        }
+
+        res.json({ message: 'Piloto eliminado correctamente', deletedPiloto });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar el piloto' });
     }
 });
 /**
@@ -456,28 +461,6 @@ app.post('/api/pilotos', async (req, res)=>{
 ////////////////////////////////////////// WEB //////////////////////////////////////
             //////////////////////////// PILOTOS ///////////////////////////////
 
-// /**
-//  * @swagger
-//  * tags:
-//  *   name: WEB (Pilotos)
-//  *   description: Endpoints de la aplicación web relacionados con Pilotos
-//  */
-// /**
-//  * @swagger
-//  * /:
-//  *   get:
-//  *     tag: [WEB]
-//  *     summary: Renderizar la página de inicio
-//  *     description: Renderiza la página de inicio de la aplicación web.
-//  *     tags: [WEB]
-//  *     responses:
-//  *       200:
-//  *         description: Página de inicio renderizada correctamente
-//  *         content:
-//  *           text/html:
-//  *             schema:
-//  *               type: string
-//  */
 // INDEX
 app.get('/', (req, res) => {
     res.render('index',{title:'Formula 1'})
@@ -492,7 +475,7 @@ app.get('/about', (req, res) => {
 
 app.get('/equipos/detalles/:id',async (req, res) => {
     const id = req.params.id
-    const query = await db('equipos').where('id', '=', id).first();
+    const query = await equipo.findById(id);
     console.log(query)
     const params = {
         title: 'Detalles Equipo',
@@ -502,31 +485,22 @@ app.get('/equipos/detalles/:id',async (req, res) => {
 });
 
 app.get('/pilotos/detalles/:id',async (req, res) => {
-    const id = req.params.id
-    const query = await db('pilotos').where('id', '=', id).first();
-    console.log(query)
-    const params = {
-        title: 'Detalles Piloto',
-        piloto: query
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const query = await piloto.findById(id);
+        console.log(query);
+        const params = {
+            title: 'Detalles Piloto',
+            piloto: query
+        };
+        res.render('detalles_piloto', params);
+    } catch (error) {
+        console.error(error);
+        // Manejo de errores, por ejemplo, renderizar una página de error
     }
-    res.render('detalles_piloto', params)
 });
 
-// /**
-//  * @swagger
-//  * /pilotos:
-//  *   get:
-//  *     summary: Obtener lista de pilotos
-//  *     description: Renderiza la página de lista de pilotos de la aplicación web.
-//  *     tags: [WEB (Pilotos)]
-//  *     responses:
-//  *       200:
-//  *         description: Lista de pilotos obtenida correctamente
-//  *         content:
-//  *           text/html:
-//  *             schema:
-//  *               type: string
-//  */
 // Show ALL Items
 app.get('/pilotos', async (req, res) => {
     const query = await piloto.find({})
@@ -538,33 +512,11 @@ app.get('/pilotos', async (req, res) => {
     console.log(params)
     res.render('pilotos', params);
 });
-// /**
-//  * @swagger
-//  *
-//  * /pilotos/update/{id}:
-//  *   get:
-//  *     summary: Obtener datos de un piloto para actualizar
-//  *     description: Renderiza la página para actualizar los datos de un piloto específico.
-//  *     tags: [WEB (Pilotos)]
-//  *     parameters:
-//  *       - in: path
-//  *         name: id
-//  *         description: ID del piloto que se desea actualizar
-//  *         required: true
-//  *         schema:
-//  *           type: integer
-//  *     responses:
-//  *       200:
-//  *         description: Datos del piloto obtenidos correctamente para la actualización
-//  *         content:
-//  *           text/html:
-//  *             schema:
-//  *               type: string
-//  */
+
 // UPDATE ITEM
 app.get('/pilotos/update/:id', async (req,res)=>{
     const id = req.params.id
-    const query = await db('pilotos').where('id', '=', id).first();
+    const query = await piloto.findById(id);
     console.log(query)
     const params = {
         title: 'Update Piloto',
@@ -572,112 +524,33 @@ app.get('/pilotos/update/:id', async (req,res)=>{
     }
     res.render('update_piloto', params)
 });
-// /**
-//  * @swagger
-//  *
-//  * /pilotos/update:
-//  *   post:
-//  *     summary: Actualizar datos de un piloto
-//  *     description: Actualiza los datos de un piloto específico.
-//  *     tags: [WEB (Pilotos)]
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               id:
-//  *                 type: integer
-//  *               nombre:
-//  *                 type: string
-//  *               edad:
-//  *                 type: integer
-//  *               nacion:
-//  *                 type: string
-//  *               premios:
-//  *                 type: integer
-//  *               imagen:
-//  *                 type: string
-//  *     responses:
-//  *       302:
-//  *         description: Redirige a la página de lista de pilotos después de la actualización
-//  *       500:
-//  *         description: Error en el servidor al intentar actualizar los datos del piloto
-//  */
+
 // Update quipo
 app.post("/pilotos/update", async (req, res)=>{
-    const params = req.body
-    console.log('params',params)
     try {
-        const result = await db('pilotos').where('id', '=',params.id).update(params)
-        console.log('insertado!', result)
-        res.redirect('/pilotos')
-    }catch (e) {
-        console.log(e)
-        res.status(500).send('error en el servidor')
+        await piloto.findByIdAndUpdate(req.body.id, req.body, { new: false });
+
+        res.redirect('/pilotos');
+    } catch (error) {
+        console.error(error);
+        res.send(500);
     }
 });
-// /**
-//  * @swagger
-//  *
-//  * /pilotos/insert:
-//  *   get:
-//  *     summary: Renderizar formulario para insertar un nuevo piloto
-//  *     description: Renderiza la página para mostrar el formulario de inserción de un nuevo piloto.
-//  *     tags: [WEB (Pilotos)]
-//  *     responses:
-//  *       200:
-//  *         description: Página de formulario renderizada correctamente
-//  *         content:
-//  *           text/html:
-//  *             schema:
-//  *               type: string
-//  */
+
 // INSERT ITEM GET: show form
 app.get('/pilotos/insert', (req,res)=>{
     res.render('insert_piloto',
         {title:'insert piloto'}
     )
 });
-// /**
-//  * @swagger
-//  *
-//  * /pilotos/insert:
-//  *   post:
-//  *     summary: Insertar un nuevo piloto
-//  *     description: Inserta un nuevo piloto con los datos proporcionados desde el formulario.
-//  *     tags: [WEB (Pilotos)]
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               nombre:
-//  *                 type: string
-//  *               edad:
-//  *                 type: integer
-//  *               nacion:
-//  *                 type: string
-//  *               premios:
-//  *                 type: integer
-//  *               imagen:
-//  *                 type: string
-//  *     responses:
-//  *       302:
-//  *         description: Redirige a la página de lista de pilotos después de la inserción
-//  *       500:
-//  *         description: Error en el servidor al intentar insertar el nuevo piloto
-//  */
+
 //Insertar piloto
 app.post('/pilotos/insert',async (req, res)=>{
-    const params = req.body
-    console.log('params',params)
+    const params = req.body;
+    console.log(params)
     try {
-        const result = await db('pilotos').insert(params)
-        console.log('insertado!', result)
+        const nuevoPiloto = piloto.create(params);
+        console.log('insertado!', nuevoPiloto)
         res.redirect('/pilotos')
     }catch (e) {
         console.log(e)
@@ -686,23 +559,7 @@ app.post('/pilotos/insert',async (req, res)=>{
 });
 
         //////////////////////////// EQUIPOS ///////////////////////////////
-// /**
-//  * @swagger
-//  *
-// *   /equipos:
-// *     get:
-// *       summary: Obtener lista de equipos
-// *       description: Renderiza la página de lista de equipos de la aplicación web.
-// *       tags:
-// *         - WEB (Equipos)
-// *       responses:
-// *         '200':
-// *           description: Lista de equipos obtenida correctamente
-// *           content:
-// *             text/html:
-// *               schema:
-// *                 type: string
-//  */
+
 // Show ALL Items
 app.get('/equipos', async (req, res) => {
     const query = await equipo.find({})
@@ -716,15 +573,13 @@ app.get('/equipos', async (req, res) => {
 });
 // Update quipo
 app.post("/equipos/update", async (req, res)=>{
-    const params = req.body
-    console.log('params',params)
     try {
-        const result = await db('equipos').where('id', '=',params.id).update(params)
-        console.log('insertado!', result)
-        res.redirect('/equipos')
-    }catch (e) {
-        console.log(e)
-        res.status(500).send('error en el servidor')
+        await equipo.findByIdAndUpdate(req.body.id, req.body, { new: false });
+
+        res.redirect('/equipos');
+    } catch (error) {
+        console.error(error);
+        res.send(500);
     }
 });
 // INSERT ITEM GET: show form
@@ -749,7 +604,7 @@ app.post('/equipos/insert',async (req, res)=>{
 // UPDATE ITEM
 app.get('/equipos/update/:id', async (req,res)=>{
     const id = req.params.id
-    const query = await db('equipos').where('id', '=', id).first();
+    const query = await equipo.findById(id);
     console.log(query)
     const params = {
         title: 'Update Equipo',
