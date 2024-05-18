@@ -1,0 +1,200 @@
+[{
+  "_id": {
+    "$oid": "6648ae4988d73bbc0dc70e14"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662cf93c352878ac8255008f"
+    },
+    "idequipo": "mercedes",
+    "equiponombre": "Mercedes-AMG Team",
+    "nacionequipo": "Alemanes",
+    "nombrepiloto": "Lewis Hamilton,Valtteri Bottas",
+    "nacionespilotos": "GBR FIN"
+  },
+  "nombrepiloto": "Lewis",
+  "apellidospiloto": "Hamilton",
+  "nacionpiloto": "Reino Unido",
+  "titulospiloto": "Siete veces Campeon del Mundo de Formula 1",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/hamilton.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648ae5988d73bbc0dc70e16"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662cf93c352878ac8255008f"
+    },
+    "idequipo": "mercedes",
+    "equiponombre": "Mercedes-AMG Team",
+    "nacionequipo": "Alemanes",
+    "nombrepiloto": "Lewis Hamilton,Valtteri Bottas",
+    "nacionespilotos": "GBR FIN"
+  },
+  "nombrepiloto": "Valtteri",
+  "apellidospiloto": "Bottas",
+  "nacionpiloto": "Finlandia",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/bottas.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648ae6788d73bbc0dc70e18"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662cf948352878ac82550091"
+    },
+    "idequipo": "redbull",
+    "equiponombre": "Red Bull Racing",
+    "nacionequipo": "Austriacos",
+    "nombrepiloto": "Max Verstappen,Sergio Pérez Mendoza",
+    "nacionespilotos": "NLD MX"
+  },
+  "nombrepiloto": "Max",
+  "apellidospiloto": "Verstappen",
+  "nacionpiloto": "Paises Bajos",
+  "titulospiloto": "Campeon del Mundo de Formula 1",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/verstappen.jpg.img.640.medium.jpg/1677069646195.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648ae8c88d73bbc0dc70e1b"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662cf948352878ac82550091"
+    },
+    "idequipo": "redbull",
+    "equiponombre": "Red Bull Racing",
+    "nacionequipo": "Austriacos",
+    "nombrepiloto": "Max Verstappen,Sergio Pérez Mendoza",
+    "nacionespilotos": "NLD MX"
+  },
+  "nombrepiloto": "Sergio",
+  "apellidospiloto": "Perez Mendoza",
+  "nacionpiloto": "Mexico",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/perez.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648ae9588d73bbc0dc70e1d"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662161a6fef025b5d76baf13"
+    },
+    "idequipo": "ferrari",
+    "equiponombre": "Scuderia Ferrari PRUEBA",
+    "nacionequipo": "Italianos",
+    "nombrepiloto": "Charles Leclerc,Carlos Sainz",
+    "nacionespilotos": "MC ESP"
+  },
+  "nombrepiloto": "Charles",
+  "apellidospiloto": "Leclerc",
+  "nacionpiloto": "Monaco",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/leclerc.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648ae9d88d73bbc0dc70e1f"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662161a6fef025b5d76baf13"
+    },
+    "idequipo": "ferrari",
+    "equiponombre": "Scuderia Ferrari PRUEBA",
+    "nacionequipo": "Italianos",
+    "nombrepiloto": "Charles Leclerc,Carlos Sainz",
+    "nacionespilotos": "MC ESP"
+  },
+  "nombrepiloto": "Carlos",
+  "apellidospiloto": "Sainz Vazquez",
+  "nacionpiloto": "España",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/sainz.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648aeb988d73bbc0dc70e21"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "66455d789e901b99d8685858"
+    },
+    "idequipo": "mclaren",
+    "equiponombre": "McLaren F1 Team",
+    "nacionequipo": "Britanicos",
+    "nombrepiloto": "Lando Norris,Daniel Ricciardo",
+    "nacionespilotos": "GBr AUS"
+  },
+  "nombrepiloto": "Lando",
+  "apellidospiloto": "Norris",
+  "nacionpiloto": "Reino Unido",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/norris.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648aec088d73bbc0dc70e23"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "66455d789e901b99d8685858"
+    },
+    "idequipo": "mclaren",
+    "equiponombre": "McLaren F1 Team",
+    "nacionequipo": "Britanicos",
+    "nombrepiloto": "Lando Norris,Daniel Ricciardo",
+    "nacionespilotos": "GBr AUS"
+  },
+  "nombrepiloto": "Daniel",
+  "apellidospiloto": "Ricciardo",
+  "nacionpiloto": "Australia",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/ricciardo.jpg.img.1536.high.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648aec888d73bbc0dc70e25"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662161c8fef025b5d76baf17"
+    },
+    "idequipo": "astonmartin",
+    "equiponombre": "Aston Martin Cognizant Formula One Team",
+    "nacionequipo": "Britanicos",
+    "nombrepiloto": "Sebastian Vettel,Lance Stroll",
+    "nacionespilotos": "DEU CAN"
+  },
+  "nombrepiloto": "Sebastian",
+  "apellidospiloto": "Vettel",
+  "nacionpiloto": "Alemania",
+  "titulospiloto": "Cuatro veces Campeon del Mundo de Formula 1",
+  "imagenpiloto": "https://hips.hearstapps.com/hmg-prod/images/dsc-2917-edit-1-1645185757.jpg"
+},
+{
+  "_id": {
+    "$oid": "6648aecf88d73bbc0dc70e27"
+  },
+  "equipo": {
+    "_id": {
+      "$oid": "662161c8fef025b5d76baf17"
+    },
+    "idequipo": "astonmartin",
+    "equiponombre": "Aston Martin Cognizant Formula One Team",
+    "nacionequipo": "Britanicos",
+    "nombrepiloto": "Sebastian Vettel,Lance Stroll",
+    "nacionespilotos": "DEU CAN"
+  },
+  "nombrepiloto": "Lance",
+  "apellidospiloto": "Stroll",
+  "nacionpiloto": "Canada",
+  "titulospiloto": "No tiene",
+  "imagenpiloto": "https://media.formula1.com/content/dam/fom-website/drivers/2023Drivers/stroll.jpg.img.1536.high.jpg"
+}]
