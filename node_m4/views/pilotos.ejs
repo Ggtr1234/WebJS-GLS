@@ -26,7 +26,7 @@
     <% pilotos.forEach(function(piloto) { %>
         <tr>
             <td><%= piloto._id %></td>
-            <td><%= piloto.equipo.equiponombre %></td>
+            <td><%= piloto.equipo.equiponombre ? piloto.equipo.equiponombre : "Tetaas"%></td>
             <td><%= piloto.nombrepiloto %></td>
             <td><%= piloto.apellidospiloto %></td>
             <td><%= piloto.nacionpiloto %></td>

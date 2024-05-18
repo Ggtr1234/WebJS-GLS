@@ -215,13 +215,22 @@ app.post("/api/equipos/update/:id", async (req, res)=>{
 
 // ELIMINAR UN ITEM DE EQUIPOS POR ID
 app.delete('/api/equipos/:id', async (req, res)=>{
-    const id = parseInt(req.params.id)
-    try{
-        await equipo.findById(id);
-        res.send('Eliminado correctamente')
-    }catch (e){
-        console.log(e);
-        res.send('Error en el servidor')
+    const equipoId = req.params.id;
+
+
+    try {
+        const equipoDeleted = await equipo.deleteOne({ _id: equipoId });
+        const findallPilot = await piloto.find({'equipo._id': equipoId});
+        for (const pilot of findallPilot){
+            await piloto.updateOne({_id:pilot._id},
+                { $set: { equipo: 'No encontrado' }});
+        }
+        // console.log(pilotoUpdate)
+        // console.log(equipoDeleted);
+        res.send('Eliminado correctamente');
+    } catch (error) {
+        console.log(error);
+        res.send('Error en el servidor');
     }
 });
 /**
@@ -381,22 +390,22 @@ app.post("/api/pilotos/update/:id", async (req, res)=>{
  * @swagger
  * /api/pilotos/{id}:
  *   delete:
- *     summary: Eliminar un piloto por su ID
- *     tags:
- *       - Pilotos
+ *     summary: Eliminar un piloto existente.
+ *     description: Elimina un piloto existente según el ID proporcionado.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del piloto a eliminar
+ *       - in: path
+ *         name: id
  *         required: true
- *         type: string
+ *         description: ID del piloto a eliminar.
+ *         schema:
+ *           type: string
  *     responses:
- *       200:
- *         description: Éxito. El piloto ha sido eliminado correctamente.
- *       404:
- *         description: No se encontró ningún piloto con el ID proporcionado.
- *       500:
- *         description: Error interno del servidor.
+ *       '200':
+ *         description: Piloto eliminado exitosamente.
+ *       '404':
+ *         description: No se encontró el piloto con el ID especificado.
+ *       '500':
+ *         description: Error en el servidor al intentar eliminar el piloto.
  */
 
 // ELIMINAR UN ITEM DE PILOTOS POR ID
@@ -404,13 +413,11 @@ app.delete('/api/pilotos/:id',async (req, res)=>{
     const id = req.params.id;
 
     try {
-        const deletedPiloto = await piloto.findOneAndDelete({ _id: id });
-
+        const deletedPiloto = await piloto.deleteOne({ _id: id });
         if (!deletedPiloto) {
             return res.status(404).json({ error: 'Piloto no encontrado' });
         }
-
-        res.json({ message: 'Piloto eliminado correctamente', deletedPiloto });
+        res.json({ message: 'Piloto eliminado', deletedPiloto });
     } catch (error) {
         res.status(500).json({ error: 'Error al eliminar el piloto' });
     }
@@ -419,42 +426,43 @@ app.delete('/api/pilotos/:id',async (req, res)=>{
  * @swagger
  * /api/pilotos:
  *   post:
- *     summary: Insertar un nuevo piloto
- *     tags:
- *       - Pilotos
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: Datos del nuevo piloto
- *         required: true
- *         schema:
- *           $ref: '#/definitions/Piloto'
+ *     summary: Agregar un nuevo piloto.
+ *     description: Crea un nuevo piloto utilizando los datos proporcionados en el cuerpo de la solicitud.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               edad:
+ *                 type: integer
+ *               equipo:
+ *                 type: string
+ *             required:
+ *               - nombre
+ *               - edad
+ *               - equipo
  *     responses:
- *       200:
- *         description: Éxito. El piloto ha sido insertado correctamente.
- *       500:
- *         description: Error interno del servidor.
- * definitions:
- *   Piloto:
- *     type: object
- *     properties:
- *       nombre:
- *         type: string
- *         description: Nombre del piloto.
+ *       '200':
+ *         description: Éxito al insertar el piloto.
+ *       '500':
+ *         description: Error en el servidor.
  */
 
 // INSERTAR UN NUEVO ITEM A PILOTOS
 app.post('/api/pilotos', async (req, res)=>{
     const params = req.body;
     console.log(params);
-    try{
-        await db('pilotos').insert(params);
-        res.send('Insertado correctamente')
-    }catch (e) {
-        console.log(e)
-        res.send('Error en el servidor')
+    try {
+        const nuevoPiloto = await piloto.create(params);
+        console.log('Insertado', nuevoPiloto);
+        res.send('Insertado correctamente');
+    } catch (error) {
+        console.error(error);
+        res.send('Error en el servidor');
     }
 });
 
@@ -475,11 +483,11 @@ app.get('/about', (req, res) => {
 
 app.get('/equipos/detalles/:id',async (req, res) => {
     const id = req.params.id
-    const query = await equipo.findById(id);
+    const query = await equipo.find({_id:id});
     console.log(query)
     const params = {
         title: 'Detalles Equipo',
-        equipo: query
+        equipo: query[0]
     }
     res.render('detalles_equipo', params)
 });
@@ -488,16 +496,15 @@ app.get('/pilotos/detalles/:id',async (req, res) => {
     const { id } = req.params;
     console.log(id);
     try {
-        const query = await piloto.findById(id);
+        const query = await piloto.find({ _id: id });
         console.log(query);
         const params = {
             title: 'Detalles Piloto',
-            piloto: query
+            piloto: query[0]
         };
         res.render('detalles_piloto', params);
     } catch (error) {
         console.error(error);
-        // Manejo de errores, por ejemplo, renderizar una página de error
     }
 });
 
@@ -509,18 +516,18 @@ app.get('/pilotos', async (req, res) => {
         title: 'Pilotos',
         pilotos: query
     }
-    console.log(params)
+    // console.log(params)
     res.render('pilotos', params);
 });
 
 // UPDATE ITEM
 app.get('/pilotos/update/:id', async (req,res)=>{
     const id = req.params.id
-    const query = await piloto.findById(id);
+    const query = await piloto.find({_id:id});
     console.log(query)
     const params = {
         title: 'Update Piloto',
-        pilotos: query
+        pilotos: query[0]
     }
     res.render('update_piloto', params)
 });
@@ -528,7 +535,7 @@ app.get('/pilotos/update/:id', async (req,res)=>{
 // Update quipo
 app.post("/pilotos/update", async (req, res)=>{
     try {
-        await piloto.findByIdAndUpdate(req.body.id, req.body, { new: false });
+        await piloto.findOneAndUpdate({ _id: req.body.id },req.body, { new: false });
 
         res.redirect('/pilotos');
     } catch (error) {
@@ -568,13 +575,13 @@ app.get('/equipos', async (req, res) => {
         title: 'Equipos',
         equipos: query
     }
-    console.log(params)
+    // console.log(params)
     res.render('equipos', params);
 });
 // Update quipo
 app.post("/equipos/update", async (req, res)=>{
     try {
-        await equipo.findByIdAndUpdate(req.body.id, req.body, { new: false });
+        await equipo.findOneAndUpdate({ _id: req.body.id },req.body, { new: false });
 
         res.redirect('/equipos');
     } catch (error) {
@@ -593,8 +600,8 @@ app.post('/equipos/insert',async (req, res)=>{
     const params = req.body
     console.log('params',params)
     try {
-        const result = await db('equipos').insert(params)
-        console.log('insertado!', result)
+        const nuevoEquipo = equipo.create(params);
+        console.log('insertado!', nuevoEquipo)
         res.redirect('/equipos')
     }catch (e) {
         console.log(e)
@@ -604,11 +611,11 @@ app.post('/equipos/insert',async (req, res)=>{
 // UPDATE ITEM
 app.get('/equipos/update/:id', async (req,res)=>{
     const id = req.params.id
-    const query = await equipo.findById(id);
+    const query = await equipo.find({_id:id});
     console.log(query)
     const params = {
         title: 'Update Equipo',
-        item: query
+        item: query[0]
     }
     res.render('update_equipo', params)
 });

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const pilotoSchema = new mongoose.Schema({
 
     equipo: {
-        _id: mongoose.Schema.Types.ObjectId,
+        _id: {type: mongoose.Schema.Types.ObjectId},
         idequipo: String,
         equiponombre: String,
         nacionequipo: String,
