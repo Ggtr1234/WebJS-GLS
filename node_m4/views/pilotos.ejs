@@ -26,7 +26,7 @@
     <% pilotos.forEach(function(piloto) { %>
         <tr>
             <td><%= piloto._id %></td>
-            <td><%= piloto.equipo.equiponombre ? piloto.equipo.equiponombre : "Tetaas"%></td>
+            <td><%= piloto.equipo.equiponombre ? piloto.equipo.equiponombre : "Sin equipo"%></td>
             <td><%= piloto.nombrepiloto %></td>
             <td><%= piloto.apellidospiloto %></td>
             <td><%= piloto.nacionpiloto %></td>
@@ -45,24 +45,27 @@
 
 <script>
     async function delete_piloto(evt){
-        evt.preventDefault() // no sigas tu comportamiento por defecto
-        let id = $(this).data('piloto-id')
-        try {
-            await $.ajax({
-                url: '/api/pilotos/'  + id,
-                type: 'DELETE'
-            })
-            window.location.reload()
+        evt.preventDefault();
+        let id = $(this).data('piloto-id');
 
-        }catch (e) {
-            console.log(e)
-            console.log('Error' + e.status + " " + e.statusText)
+        let confirmacion = confirm("¿Estás seguro de que quieres eliminar este piloto?");
+
+        if (confirmacion) {
+            try {
+                await $.ajax({
+                    url: '/api/pilotos/'  + id,
+                    type: 'DELETE'
+                });
+                window.location.reload();
+            } catch (e) {
+                console.log(e);
+                console.log('Error' + e.status + " " + e.statusText);
+            }
         }
     }
 
-    $(document).ready(() =>{
-        document.getElementsByClassName('action_delete_piloto')
-        $('.action_delete_piloto').click(delete_piloto)
+    $(document).ready(() => {
+        $('.action_delete_piloto').click(delete_piloto);
     });
 </script>
 

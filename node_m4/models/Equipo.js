@@ -14,10 +14,10 @@ const equipoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    nombrepiloto: [{
+    nombrepiloto: {
         type: String,
         required: true,
-    }],
+    },
     nacionespilotos: {
         type: String,
         required: true

@@ -1,0 +1,5 @@
+curl -X POST http://localhost:3000/api/equipos/update/662161c8fef025b5d76baf17 -H "Content-Type: application/json" -d '{"idequipo": "662161c8fef025b5d76baf17", "equiponombre": "Nuevo Nombre de Equipo", "nacionequipo": "Nueva Nación", "nombrepiloto": "Nuevo Nombre de Piloto", "nacionespilotos": "Nueva Nación de Pilotos"}'
+
+curl -X POST http://localhost:3000/api/pilotos/update/6648ae4988d73bbc0dc70e14 -H 'Content-Type: application/json' -d '{"equipo":{"_id":"6648ae4988d73bbc0dc70e14","idequipo":"ID_DEL_EQUIPO","equiponombre":"Nombre del Equipo","nacionequipo":"Nación del Equipo","nombrepiloto":"Nuevo Nombre del Piloto","nacionespilotos":"Nación del Piloto"},"nombrepiloto":"Nuevo Nombre del Piloto","apellidospiloto":"Nuevos Apellidos del Piloto","nacionpiloto":"Nueva Nación del Piloto","titulospiloto":"Nuevos Títulos del Piloto","imagenpiloto":"Nueva URL de la Imagen del Piloto"}'
+
+curl -X POST http://localhost:3000/api/pilotos -H 'Content-Type: application/json' -d '{"nombrepiloto":"Nombre del Piloto","apellidospiloto":"Apellidos del Piloto","nacionpiloto":"Nación del Piloto","titulospiloto":"Títulos del Piloto","imagenpiloto":"URL de la Imagen del Piloto"}'

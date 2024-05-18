@@ -6,14 +6,18 @@
 </head>
 <body>
 <h1> <%= title %></h1>
-<form action="/pilotos/update" method="POST">
+<form action="/pilotos/update" method="POST" id="updateForm">
 
     <input id="id" type="hidden" name="id" value="<%= pilotos.id %>">
     <label for="apellidospiloto">Apellidos</label>
     <input id="apellidospiloto" type="text" name="apellidospiloto" value="<%= pilotos.apellidospiloto %>">
 
     <label for="idequipo">Id Equipo</label>
-    <input id="idequipo" type="text" name="idequipo" value=" <%= pilotos.idequipo %>" >
+    <select class="option-bar" id="equipo" name="equipo">
+        <% equipos.forEach((equipo) =>{ %>
+            <option value="<%= equipo.id %>" <% if (equipo.id === pilotos.equipo) { %> selected <% } %>><%= equipo.equiponombre %></option>
+        <% } ) %>
+    </select>
 
     <label for="nacionpiloto">Nacion</label>
     <input id="nacionpiloto" type="text" name="nacionpiloto" value="<%= pilotos.nacionpiloto %>" >
@@ -27,9 +31,18 @@
     <label for="titulospiloto">Titulos</label>
     <input id="titulospiloto" type="text" name="titulospiloto" value="<%= pilotos.titulospiloto %>" >
 
-
-    <input type="submit" value="update">
+    <button type="button" onclick="confirmUpdate()">Update</button>
 </form>
+
+<script>
+    function confirmUpdate() {
+        let confirmacion = confirm("¿Estás seguro de que quieres actualizar este piloto?");
+
+        if (confirmacion) {
+            document.getElementById("updateForm").submit();
+        }
+    }
+</script>
 </body>
 <%- include('partials/footer.html') %>
 </html>

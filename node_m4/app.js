@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var swaggerJSDoc = require('swagger-jsdoc');
-var  swaggerUi = require('swagger-ui-express');
+var swaggerUi = require('swagger-ui-express');
 var app = express();
 
 // view engine setup
@@ -19,12 +19,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
 
-const swaggerOptions ={
+const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
             title: 'API WEB GLS',
-            version: '1.0.0',
+            version: '1.1.0',
             description: 'Equipos y pilotos de Formula 1',
             contact: {
                 name: "German Llerena Sanchez",
@@ -36,8 +36,8 @@ const swaggerOptions ={
     apis: ['app.js']
 };
 // Swagger
-    const swaggerSpec = swaggerJSDoc(swaggerOptions);
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //
 // const db = require('knex')({
 //     client:'sqlite3',
@@ -46,11 +46,12 @@ const swaggerOptions ={
 
 const mongoose = require('mongoose');
 const piloto = require('./models/Piloto.js');
-const equipo = require('./models/Equipo.js');
+const Equipo = require('./models/Equipo.js');
 mongoose.connect("mongodb://127.0.0.1:27017/f1?retryWrites=true&w=majority");
-function findItem(where, id){
-    for (let i = 0; i < where.length ; i++) {
-        if (where[i].id == id){
+
+function findItem(where, id) {
+    for (let i = 0; i < where.length; i++) {
+        if (where[i].id == id) {
             return i
         }
     }
@@ -70,123 +71,236 @@ mongoose.connection.on('disconnected', () => {
 });
 
 
-
 //////////////////////////////////////////////// API //////////////////////////////////////////////
 
-                  //////////////////////////// EQUIPOS ///////////////////////////////
+//////////////////////////// EQUIPOS ///////////////////////////////
 /**
  * @swagger
  * /api/equipos:
  *   get:
- *     summary: Obtener todos los equipos
  *     tags:
  *       - Equipos
+ *     summary: Obtener todos los equipos
+ *     description: Retorna una lista de todos los equipos.
  *     responses:
  *       200:
- *         description: Éxito. Devuelve una lista de todos los equipos.
- *         schema:
- *           type: array
- *           items:
- *             $ref: '#/definitions/Equipo'
+ *         description: Lista de equipos obtenida con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 equipos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         description: ID del equipo.
+ *                         example: "60d21b4667d0d8992e610c85"
+ *                       idequipo:
+ *                         type: string
+ *                         description: Identificador único del equipo.
+ *                         example: "E001"
+ *                       equiponombre:
+ *                         type: string
+ *                         description: Nombre del equipo.
+ *                         example: "Equipo A"
+ *                       nacionequipo:
+ *                         type: string
+ *                         description: Nacionalidad del equipo.
+ *                         example: "España"
+ *                       nombrepiloto:
+ *                         type: string
+ *                         description: Nombre del piloto principal del equipo.
+ *                         example: "Juan"
+ *                       nacionespilotos:
+ *                         type: string
+ *                         description: Nacionalidad del piloto principal del equipo.
+ *                         example: "España"
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error al obtener los equipos."
  */
 
 // MUESTRA TODOS LOS EQUIPOS
 app.get('/api/equipos', async (req, res) => {
-    // await db.select('*')
-    //     .from('equipos')
-    //     .then(function (data){
-    //         data = {equipos: data}
-    //         res.send(data)
-    //     })
-    //     .catch(function (error){
-    //         console.log(error)
-    //     })
-    const equipos = await equipo.find({});
-    res.status(200).json({equipos});
+    const equipos = await Equipo.find({});
+    res.json({equipos});
 });
 /**
  * @swagger
  * /api/equipos/{id}:
  *   get:
- *     summary: Obtener un equipo por su ID
  *     tags:
  *       - Equipos
+ *     summary: Obtener un equipo por ID
+ *     description: Retorna un equipo basado en su ID.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del equipo a buscar
+ *       - in: path
+ *         name: id
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
+ *         description: ID del equipo
  *     responses:
  *       200:
- *         description: Éxito. Devuelve el equipo correspondiente al ID proporcionado.
- *         schema:
- *           $ref: '#/definitions/Equipo'
+ *         description: Equipo obtenido con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: ID del equipo.
+ *                   example: "60d21b4667d0d8992e610c85"
+ *                 idequipo:
+ *                   type: string
+ *                   description: Identificador único del equipo.
+ *                   example: "E001"
+ *                 equiponombre:
+ *                   type: string
+ *                   description: Nombre del equipo.
+ *                   example: "Equipo A"
+ *                 nacionequipo:
+ *                   type: string
+ *                   description: Nacionalidad del equipo.
+ *                   example: "España"
+ *                 nombrepiloto:
+ *                   type: string
+ *                   description: Nombre del piloto principal del equipo.
+ *                   example: "Juan"
+ *                 nacionespilotos:
+ *                   type: string
+ *                   description: Nacionalidad del piloto principal del equipo.
+ *                   example: "España"
  *       404:
- *         description: No se encontró ningún equipo con el ID proporcionado.
+ *         description: Equipo no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Equipo no encontrado."
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error al obtener el equipo."
  */
 
 // ITEMS DETAIL
 app.get('/api/equipos/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
-    const result = await db.select('*').from('equipos').where('id', id);
-    res.send(result);
+    const id = req.params.id
+    const result = await Equipo.find({_id: id})
+    res.json(result);
 });
 /**
  * @swagger
  * /api/equipos/update/{id}:
  *   post:
- *     summary: Actualizar un equipo por su ID
  *     tags:
  *       - Equipos
+ *     summary: Actualizar un equipo por ID
+ *     description: Actualiza los detalles de un equipo basado en su ID.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del equipo a actualizar
- *         required: true
- *         type: string
- *       - name: body
- *         in: body
- *         description: Datos actualizados del equipo
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
- *           $ref: '#/definitions/EquipoUpdate'
+ *           type: string
+ *         description: ID del equipo
+ *     requestBody:
+ *       description: Datos a actualizar del equipo
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idequipo:
+ *                 type: string
+ *                 description: Identificador único del equipo.
+ *                 example: "E001"
+ *               equiponombre:
+ *                 type: string
+ *                 description: Nombre del equipo.
+ *                 example: "Equipo A"
+ *               nacionequipo:
+ *                 type: string
+ *                 description: Nacionalidad del equipo.
+ *                 example: "España"
+ *               nombrepiloto:
+ *                 type: string
+ *                 description: Nombre del piloto principal del equipo.
+ *                 example: "Juan"
+ *               nacionespilotos:
+ *                 type: string
+ *                 description: Nacionalidad del piloto principal del equipo.
+ *                 example: "España"
  *     responses:
  *       200:
- *         description: Éxito. El equipo ha sido actualizado correctamente.
+ *         description: Equipo actualizado con éxito.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Updateado correctamente"
  *       404:
- *         description: No se encontró ningún equipo con el ID proporcionado.
+ *         description: Equipo no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Equipo no encontrado."
  *       500:
- *         description: Error interno del servidor.
- * definitions:
- *   Equipo:
- *     type: object
- *     properties:
- *       _id:
- *         type: string
- *         description: ID único del equipo.
- *       nombre:
- *         type: string
- *         description: Nombre del equipo.
- *   EquipoUpdate:
- *     type: object
- *     properties:
- *       nombre:
- *         type: string
- *         description: Nuevo nombre del equipo.
+ *         description: Error en el servidor.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Error en el servidor."
  */
 // HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
-app.post("/api/equipos/update/:id", async (req, res)=>{
+app.post("/api/equipos/update/:id", async (req, res) => {
     let id = req.params.id;
-    let params = req.body;
-    console.log(params)
-    try{
-        await db('equipos').where('id','=' ,id).update(params);
+    let dataBody = req.body;
+    console.log(dataBody)
+    try {
+        await Equipo.findOneAndUpdate(
+            {_id: id},
+            {$set: dataBody},
+            {new: true}
+        );
+        const findAllPiloto = await piloto.find({'equipo._id': id});
+        for (const pilot of findAllPiloto) {
+            await piloto.findOneAndUpdate(
+                {_id: pilot._id},
+                {$set: {equipo: req.body}},
+                {new: true});
+        }
         res.send('Updateado correctamente')
         console.log('Updateado id: ', id)
-    } catch (error){
+    } catch (error) {
         console.log(error)
         res.send('Error en el servidor.')
     }
@@ -195,35 +309,53 @@ app.post("/api/equipos/update/:id", async (req, res)=>{
  * @swagger
  * /api/equipos/{id}:
  *   delete:
- *     summary: Eliminar un equipo por su ID
  *     tags:
  *       - Equipos
+ *     summary: Eliminar un equipo por ID
+ *     description: Elimina un equipo basado en su ID.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del equipo a eliminar
+ *       - in: path
+ *         name: id
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
+ *         description: ID del equipo
  *     responses:
  *       200:
- *         description: Éxito. El equipo ha sido eliminado correctamente.
+ *         description: Equipo eliminado con éxito.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Eliminado correctamente"
  *       404:
- *         description: No se encontró ningún equipo con el ID proporcionado.
+ *         description: Equipo no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Equipo no encontrado."
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error en el servidor.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Error en el servidor."
  */
 
 // ELIMINAR UN ITEM DE EQUIPOS POR ID
-app.delete('/api/equipos/:id', async (req, res)=>{
+app.delete('/api/equipos/:id', async (req, res) => {
     const equipoId = req.params.id;
-
-
     try {
-        const equipoDeleted = await equipo.deleteOne({ _id: equipoId });
+        const equipoDeleted = await Equipo.deleteOne({_id: equipoId});
         const findallPilot = await piloto.find({'equipo._id': equipoId});
-        for (const pilot of findallPilot){
-            await piloto.updateOne({_id:pilot._id},
-                { $set: { equipo: 'No encontrado' }});
+        for (const pilot of findallPilot) {
+            await piloto.updateOne({_id: pilot._id},
+                {$set: {equipo: 'No encontrado'}});
         }
         // console.log(pilotoUpdate)
         // console.log(equipoDeleted);
@@ -237,151 +369,268 @@ app.delete('/api/equipos/:id', async (req, res)=>{
  * @swagger
  * /api/equipos:
  *   post:
- *     summary: Insertar un nuevo equipo
  *     tags:
  *       - Equipos
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: Datos del nuevo equipo
- *         required: true
- *         schema:
- *           $ref: '#/definitions/Equipo'
+ *     summary: Crear un nuevo equipo
+ *     description: Crea un nuevo equipo con los datos proporcionados.
+ *     requestBody:
+ *       description: Datos del nuevo equipo
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idequipo:
+ *                 type: string
+ *                 description: Identificador único del equipo.
+ *                 example: "E001"
+ *               equiponombre:
+ *                 type: string
+ *                 description: Nombre del equipo.
+ *                 example: "Equipo A"
+ *               nacionequipo:
+ *                 type: string
+ *                 description: Nacionalidad del equipo.
+ *                 example: "España"
+ *               nombrepiloto:
+ *                 type: string
+ *                 description: Nombre del piloto principal del equipo.
+ *                 example: "Juan"
+ *               nacionespilotos:
+ *                 type: string
+ *                 description: Nacionalidad del piloto principal del equipo.
+ *                 example: "España"
  *     responses:
  *       200:
- *         description: Éxito. El equipo ha sido insertado correctamente.
+ *         description: Equipo creado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Equipo'
  *       500:
- *         description: Error interno del servidor.
- * definitions:
- *   Equipo:
- *     type: object
- *     properties:
- *       nombre:
- *         type: string
- *         description: Nombre del equipo.
+ *         description: Error en el servidor.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Error en el servidor."
  */
 
 // INSERTAR UN NUEVO ITEM A EQUIPOS
-app.post('/api/equipos', async (req, res)=>{
+app.post('/api/equipos', async (req, res) => {
     const params = req.body;
     console.log(params);
-    try{
-        await db('equipos').insert(params);
-        res.send('Insertado correctamente')
-    }catch (e) {
+    try {
+        const nuevoEquipo = await Equipo.create(params);
+        res.json(nuevoEquipo)
+    } catch (e) {
         console.log(e)
         res.send('Error en el servidor')
     }
 
 });
 
-                    //////////////////////////// PILOTOS ///////////////////////////////
+//////////////////////////// PILOTOS ///////////////////////////////
 /**
  * @swagger
  * /api/pilotos:
  *   get:
- *     summary: Obtener todos los pilotos
  *     tags:
  *       - Pilotos
+ *     summary: Obtener todos los pilotos
+ *     description: Retorna una lista de todos los pilotos.
  *     responses:
  *       200:
- *         description: Éxito. Devuelve una lista de todos los pilotos.
- *         schema:
- *           type: array
- *           items:
- *             $ref: '#/definitions/Piloto'
+ *         description: Lista de pilotos obtenida con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 pilotos:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Piloto'
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error al obtener los pilotos."
  */
 
 // MUESTRA TODOS LOS PILOTOS
-app.get('/api/pilotos',async (req, res) => {
-    await db.select('*')
-        .from('pilotos')
-        .then(function (data){
-            data = {pilotos: data}
-            res.send(data)
-        })
-        .catch(function (error){
-            console.log(error)
-        })
+app.get('/api/pilotos', async (req, res) => {
+    const pilotos = await piloto.find({});
+    res.json({pilotos});
 });
 /**
  * @swagger
  * /api/pilotos/{id}:
  *   get:
- *     summary: Obtener un piloto por su ID
  *     tags:
  *       - Pilotos
+ *     summary: Obtener un piloto por ID
+ *     description: Retorna un piloto basado en su ID.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del piloto a buscar
+ *       - in: path
+ *         name: id
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
+ *         description: ID del piloto
  *     responses:
  *       200:
- *         description: Éxito. Devuelve el piloto correspondiente al ID proporcionado.
- *         schema:
- *           $ref: '#/definitions/Piloto'
+ *         description: Piloto obtenido con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: ID del piloto.
+ *                   example: "60d21b4667d0d8992e610c85"
+ *                 equipo:
+ *                   $ref: '#/components/schemas/Equipo'
+ *                 nombrepiloto:
+ *                   type: string
+ *                   description: Nombre del piloto.
+ *                   example: "Juan"
+ *                 apellidospiloto:
+ *                   type: string
+ *                   description: Apellidos del piloto.
+ *                   example: "López"
+ *                 nacionpiloto:
+ *                   type: string
+ *                   description: Nacionalidad del piloto.
+ *                   example: "España"
+ *                 titulospiloto:
+ *                   type: string
+ *                   description: Títulos del piloto.
+ *                   example: "Campeón del mundo 2020"
+ *                 imagenpiloto:
+ *                   type: string
+ *                   description: URL de la imagen del piloto.
+ *                   example: "https://example.com/image.jpg"
  *       404:
- *         description: No se encontró ningún piloto con el ID proporcionado.
+ *         description: Piloto no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Piloto no encontrado."
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error al obtener el piloto."
  */
 
 // ITEMS DETAIL
-app.get('/api/pilotos/:id',async (req, res)=>{
-    const id = parseInt(req.params.id)
-    const result = await db.select('*').from('pilotos').where('id', id);
-    res.send(result);
+app.get('/api/pilotos/:id', async (req, res) => {
+    const id = req.params.id
+    const result = await piloto.find({_id: id})
+    res.json(result);
 });
 /**
  * @swagger
  * /api/pilotos/update/{id}:
  *   post:
- *     summary: Actualizar un piloto por su ID
  *     tags:
  *       - Pilotos
+ *     summary: Actualizar un piloto por ID
+ *     description: Actualiza los detalles de un piloto basado en su ID.
  *     parameters:
- *       - name: id
- *         in: path
- *         description: ID del piloto a actualizar
- *         required: true
- *         type: string
- *       - name: body
- *         in: body
- *         description: Datos actualizados del piloto
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
- *           $ref: '#/definitions/PilotoUpdate'
+ *           type: string
+ *         description: ID del piloto
+ *     requestBody:
+ *       description: Datos a actualizar del piloto
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               equipo:
+ *                 $ref: '#/components/schemas/Equipo'
+ *               nombrepiloto:
+ *                 type: string
+ *                 description: Nombre del piloto.
+ *                 example: "Juan"
+ *               apellidospiloto:
+ *                 type: string
+ *                 description: Apellidos del piloto.
+ *                 example: "López"
+ *               nacionpiloto:
+ *                 type: string
+ *                 description: Nacionalidad del piloto.
+ *                 example: "España"
+ *               titulospiloto:
+ *                 type: string
+ *                 description: Títulos del piloto.
+ *                 example: "Campeón del mundo 2020"
+ *               imagenpiloto:
+ *                 type: string
+ *                 description: URL de la imagen del piloto.
+ *                 example: "https://example.com/image.jpg"
  *     responses:
  *       200:
- *         description: Éxito. El piloto ha sido actualizado correctamente.
+ *         description: Piloto actualizado con éxito.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Updateado correctamente"
+ *       404:
+ *         description: Piloto no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Piloto no encontrado."
  *       500:
- *         description: Error interno del servidor.
- * definitions:
- *   PilotoUpdate:
- *     type: object
- *     properties:
- *       nombre:
- *         type: string
- *         description: Nuevo nombre del piloto.
+ *         description: Error en el servidor.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Error en el servidor."
  */
-
-
 // HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
-app.post("/api/pilotos/update/:id", async (req, res)=>{
+app.post("/api/pilotos/update/:id", async (req, res) => {
     let id = req.params.id;
-    let params = req.body;
-    console.log(params)
-    try{
-        await db('pilotos').where('id','=' ,id).update(params);
+    let dataBody = req.body;
+    console.log(dataBody)
+    try {
+        await piloto.findOneAndUpdate(
+            {_id: id},
+            {$set: dataBody},
+            {new: true}
+        );
         res.send('Updateado correctamente')
-        console.log('Updateado id: ', id)
-    } catch (error){
+        // console.log('Updateado id: ', id)
+    } catch (error) {
         console.log(error)
         res.send('Error en el servidor.')
     }
@@ -390,70 +639,124 @@ app.post("/api/pilotos/update/:id", async (req, res)=>{
  * @swagger
  * /api/pilotos/{id}:
  *   delete:
- *     summary: Eliminar un piloto existente.
- *     description: Elimina un piloto existente según el ID proporcionado.
+ *     tags:
+ *       - Pilotos
+ *     summary: Eliminar un piloto por ID
+ *     description: Elimina un piloto basado en su ID.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID del piloto a eliminar.
  *         schema:
  *           type: string
+ *         description: ID del piloto
  *     responses:
- *       '200':
- *         description: Piloto eliminado exitosamente.
- *       '404':
- *         description: No se encontró el piloto con el ID especificado.
- *       '500':
- *         description: Error en el servidor al intentar eliminar el piloto.
+ *       200:
+ *         description: Piloto eliminado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Piloto eliminado"
+ *                 deletedPiloto:
+ *                   type: object
+ *                   description: Detalles del piloto eliminado.
+ *       404:
+ *         description: Piloto no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Piloto no encontrado"
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error al eliminar el piloto"
  */
 
 // ELIMINAR UN ITEM DE PILOTOS POR ID
-app.delete('/api/pilotos/:id',async (req, res)=>{
+app.delete('/api/pilotos/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        const deletedPiloto = await piloto.deleteOne({ _id: id });
+        const deletedPiloto = await piloto.deleteOne({_id: id});
         if (!deletedPiloto) {
-            return res.status(404).json({ error: 'Piloto no encontrado' });
+            return res.status(404).json({error: 'Piloto no encontrado'});
         }
-        res.json({ message: 'Piloto eliminado', deletedPiloto });
+        res.json({message: 'Piloto eliminado', deletedPiloto});
     } catch (error) {
-        res.status(500).json({ error: 'Error al eliminar el piloto' });
+        res.status(500).json({error: 'Error al eliminar el piloto'});
     }
 });
 /**
  * @swagger
  * /api/pilotos:
  *   post:
- *     summary: Agregar un nuevo piloto.
- *     description: Crea un nuevo piloto utilizando los datos proporcionados en el cuerpo de la solicitud.
+ *     tags:
+ *       - Pilotos
+ *     summary: Crear un nuevo piloto
+ *     description: Crea un nuevo piloto con los datos proporcionados.
  *     requestBody:
+ *       description: Datos del nuevo piloto
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
- *                 type: string
- *               edad:
- *                 type: integer
  *               equipo:
+ *                 $ref: '#/components/schemas/Equipo'
+ *               nombrepiloto:
  *                 type: string
- *             required:
- *               - nombre
- *               - edad
- *               - equipo
+ *                 description: Nombre del piloto.
+ *                 example: "Juan"
+ *               apellidospiloto:
+ *                 type: string
+ *                 description: Apellidos del piloto.
+ *                 example: "López"
+ *               nacionpiloto:
+ *                 type: string
+ *                 description: Nacionalidad del piloto.
+ *                 example: "España"
+ *               titulospiloto:
+ *                 type: string
+ *                 description: Títulos del piloto.
+ *                 example: "Campeón del mundo 2020"
+ *               imagenpiloto:
+ *                 type: string
+ *                 description: URL de la imagen del piloto.
+ *                 example: "https://example.com/image.jpg"
  *     responses:
- *       '200':
- *         description: Éxito al insertar el piloto.
- *       '500':
+ *       200:
+ *         description: Piloto creado con éxito.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Insertado correctamente"
+ *       500:
  *         description: Error en el servidor.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Error en el servidor."
  */
 
 // INSERTAR UN NUEVO ITEM A PILOTOS
-app.post('/api/pilotos', async (req, res)=>{
+app.post('/api/pilotos', async (req, res) => {
     const params = req.body;
     console.log(params);
     try {
@@ -467,23 +770,23 @@ app.post('/api/pilotos', async (req, res)=>{
 });
 
 ////////////////////////////////////////// WEB //////////////////////////////////////
-            //////////////////////////// PILOTOS ///////////////////////////////
+//////////////////////////// PILOTOS ///////////////////////////////
 
 // INDEX
 app.get('/', (req, res) => {
-    res.render('index',{title:'Formula 1'})
+    res.render('index', {title: 'Formula 1'})
 });
 
 app.get('/contact', (req, res) => {
-    res.render('contact',{title:'Contacto'})
+    res.render('contact', {title: 'Contacto'})
 });
 app.get('/about', (req, res) => {
-    res.render('about',{title:'About'})
+    res.render('about', {title: 'About'})
 });
 
-app.get('/equipos/detalles/:id',async (req, res) => {
+app.get('/equipos/detalles/:id', async (req, res) => {
     const id = req.params.id
-    const query = await equipo.find({_id:id});
+    const query = await Equipo.find({_id: id});
     console.log(query)
     const params = {
         title: 'Detalles Equipo',
@@ -492,11 +795,11 @@ app.get('/equipos/detalles/:id',async (req, res) => {
     res.render('detalles_equipo', params)
 });
 
-app.get('/pilotos/detalles/:id',async (req, res) => {
-    const { id } = req.params;
+app.get('/pilotos/detalles/:id', async (req, res) => {
+    const {id} = req.params;
     console.log(id);
     try {
-        const query = await piloto.find({ _id: id });
+        const query = await piloto.find({_id: id});
         console.log(query);
         const params = {
             title: 'Detalles Piloto',
@@ -521,21 +824,34 @@ app.get('/pilotos', async (req, res) => {
 });
 
 // UPDATE ITEM
-app.get('/pilotos/update/:id', async (req,res)=>{
+app.get('/pilotos/update/:id', async (req, res) => {
     const id = req.params.id
-    const query = await piloto.find({_id:id});
+    const query = await piloto.find({_id: id});
+    const equipos = await Equipo.find({});
     console.log(query)
     const params = {
         title: 'Update Piloto',
-        pilotos: query[0]
+        pilotos: query[0],
+        equipos: equipos
     }
     res.render('update_piloto', params)
 });
 
 // Update quipo
-app.post("/pilotos/update", async (req, res)=>{
+app.post("/pilotos/update", async (req, res) => {
     try {
-        await piloto.findOneAndUpdate({ _id: req.body.id },req.body, { new: false });
+        const {id,nombrepiloto, apellidospiloto, nacionpiloto, titulospiloto, imagenpiloto, equipo} = req.body;
+        const equipoSelec = await Equipo.find({_id: equipo})
+        const nuevoPiloto = await piloto.findOneAndUpdate({_id: id}, {
+                nombrepiloto,
+                apellidospiloto,
+                nacionpiloto,
+                titulospiloto,
+                imagenpiloto,
+                equipo: equipoSelec[0]
+            },
+            {new: false});
+        console.log('insertado!', nuevoPiloto)
 
         res.redirect('/pilotos');
     } catch (error) {
@@ -545,31 +861,41 @@ app.post("/pilotos/update", async (req, res)=>{
 });
 
 // INSERT ITEM GET: show form
-app.get('/pilotos/insert', (req,res)=>{
+app.get('/pilotos/insert', async (req, res) => {
+    const equipos = await Equipo.find({});
+    console.log(equipos)
     res.render('insert_piloto',
-        {title:'insert piloto'}
+        {title: 'insert piloto', equipos: equipos},
     )
 });
 
 //Insertar piloto
-app.post('/pilotos/insert',async (req, res)=>{
-    const params = req.body;
-    console.log(params)
+app.post('/pilotos/insert', async (req, res) => {
+    const {nombrepiloto, apellidospiloto, nacionpiloto, titulospiloto, imagenpiloto, equipo} = req.body;
+    // console.log(params)
     try {
-        const nuevoPiloto = piloto.create(params);
+        const equipoSelec = await Equipo.find({_id: equipo})
+        const nuevoPiloto = await piloto.create({
+            nombrepiloto,
+            apellidospiloto,
+            nacionpiloto,
+            titulospiloto,
+            imagenpiloto,
+            equipo: equipoSelec[0]
+        });
         console.log('insertado!', nuevoPiloto)
         res.redirect('/pilotos')
-    }catch (e) {
+    } catch (e) {
         console.log(e)
         res.status(500).send('error en el servidor')
     }
 });
 
-        //////////////////////////// EQUIPOS ///////////////////////////////
+//////////////////////////// EQUIPOS ///////////////////////////////
 
 // Show ALL Items
 app.get('/equipos', async (req, res) => {
-    const query = await equipo.find({})
+    const query = await Equipo.find({})
     // console.log(query)
     const params = {
         title: 'Equipos',
@@ -579,16 +905,16 @@ app.get('/equipos', async (req, res) => {
     res.render('equipos', params);
 });
 // Update quipo
-app.post("/equipos/update", async (req, res)=>{
+app.post("/equipos/update", async (req, res) => {
     try {
         const equipoId = req.body.id
-        await equipo.findOneAndUpdate({ _id: req.body.id },req.body, { new: false });
+        await Equipo.findOneAndUpdate({_id: req.body.id}, req.body, {new: false});
         const findAllPilot = await piloto.find({'equipo._id': equipoId});
         // console.log(findAllPilot);
-        for (const pilot of findAllPilot){
-            await piloto.findOneAndUpdate({_id:pilot._id},
-                {$set: {equipo: req.body}},{new: false});
-            console.log("Piloto: ",pilot);
+        for (const pilot of findAllPilot) {
+            await piloto.findOneAndUpdate({_id: pilot._id},
+                {$set: {equipo: req.body}}, {new: false});
+            console.log("Piloto: ", pilot);
         }
         res.redirect('/equipos');
     } catch (error) {
@@ -597,28 +923,28 @@ app.post("/equipos/update", async (req, res)=>{
     }
 });
 // INSERT ITEM GET: show form
-app.get('/equipos/insert', (req,res)=>{
+app.get('/equipos/insert', (req, res) => {
     res.render('insert_equipo',
-        {title:'insert equipo'}
+        {title: 'insert equipo'}
     )
 });
 // INSERT ITEM POST: get params and do your mojo!
-app.post('/equipos/insert',async (req, res)=>{
+app.post('/equipos/insert', async (req, res) => {
     const params = req.body
-    console.log('params',params)
+    console.log('params', params)
     try {
-        const nuevoEquipo = equipo.create(params);
+        const nuevoEquipo = Equipo.create(params);
         console.log('insertado!', nuevoEquipo)
         res.redirect('/equipos')
-    }catch (e) {
+    } catch (e) {
         console.log(e)
         res.status(500).send('error en el servidor')
     }
 });
 // UPDATE ITEM
-app.get('/equipos/update/:id', async (req,res)=>{
+app.get('/equipos/update/:id', async (req, res) => {
     const id = req.params.id
-    const query = await equipo.find({_id:id});
+    const query = await Equipo.find({_id: id});
     console.log(query)
     const params = {
         title: 'Update Equipo',
@@ -626,7 +952,6 @@ app.get('/equipos/update/:id', async (req,res)=>{
     }
     res.render('update_equipo', params)
 });
-
 
 
 // catch 404 and forward to error handler

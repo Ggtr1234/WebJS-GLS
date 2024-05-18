@@ -47,19 +47,24 @@
     async function delete_equipo(evt){
         evt.preventDefault();
         let id = $(this).data('equipo-id');
-        try {
-            await $.ajax({
-                url: '/api/equipos/'  + id,
-                type: 'DELETE'
-            });
-            window.location.reload();
 
-        } catch (e) {
-            console.log('Error' + e.status + " " + e.statusText);
+        let confirmacion = confirm("¿Estás seguro de que quieres eliminar este equipo?");
+
+        if (confirmacion) {
+            try {
+                await $.ajax({
+                    url: '/api/equipos/'  + id,
+                    type: 'DELETE'
+                });
+                window.location.reload();
+            } catch (e) {
+                console.log(e);
+                console.log('Error' + e.status + " " + e.statusText);
+            }
         }
     }
 
-    $(document).ready(() =>{
+    $(document).ready(() => {
         $('.action_delete_equipo').click(delete_equipo);
     });
 </script>

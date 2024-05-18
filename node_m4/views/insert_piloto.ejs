@@ -9,7 +9,12 @@
 <form action="/pilotos/insert" method="POST">
 
     <label for="equipo">equipo</label>
-    <input id="equipo" type="text" name="equipo">
+    <select class="option-bar" id="equipo" name="equipo">
+        <% equipos.forEach((equipo) =>{ %>
+            <option value="<%= equipo.id %>"><%= equipo.equiponombre %></option>
+        <% } ) %>
+    </select>
+
 
     <label for="nombrepiloto">nombrepiloto</label>
     <input id="nombrepiloto" type="text" name="nombrepiloto">
