@@ -581,8 +581,15 @@ app.get('/equipos', async (req, res) => {
 // Update quipo
 app.post("/equipos/update", async (req, res)=>{
     try {
+        const equipoId = req.body.id
         await equipo.findOneAndUpdate({ _id: req.body.id },req.body, { new: false });
-
+        const findAllPilot = await piloto.find({'equipo._id': equipoId});
+        // console.log(findAllPilot);
+        for (const pilot of findAllPilot){
+            await piloto.findOneAndUpdate({_id:pilot._id},
+                {$set: {equipo: req.body}},{new: false});
+            console.log("Piloto: ",pilot);
+        }
         res.redirect('/equipos');
     } catch (error) {
         console.error(error);
